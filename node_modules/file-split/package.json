@@ -1,0 +1,27 @@
+{
+    "name": "file-split",
+    "version": "0.0.2",
+    "description": "Cuts a input stream (e.g. file) in multiple files",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Alexander Heimbuch (alex@zusatzstoff.org)",
+    "license": "MIT",
+    "dependencies": {
+        "bluebird": "^2.9.13",
+        "cli": "^0.6.5",
+        "sillyname": "0.0.3"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:zusatzstoff/file-splitter.git"
+    },
+    "bugs": {
+        "url": "https://github.com/zusatzstoff/file-splitter/issues"
+    },
+    "preferGlobal": "true",
+    "bin": {
+        "file-split": "index.js"
+    }
+}

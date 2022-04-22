@@ -70,8 +70,8 @@ const decryptDES = (encrypted) => {
 //handle post file upload
 app.post('/upload', function(req, res){
   
-  let data = req.files.mypic.data.toString();
-  console.log(req.files.mypic.data.toString('hex'))
+  let data = req.files.mypic.data.toString()
+  console.log(req.files.mypic.data)
   let size = req.files.mypic.size
 
   let data1 = data.slice(0,size/2)
@@ -82,30 +82,32 @@ app.post('/upload', function(req, res){
   console.log("divided")
   console.log(data2)
   console.log("divided")
-  console.log(data3)
+  //console.log(data3)
 
   let encryptedAES = encryptAES(data1);
-  console.log(encryptedAES.toString());
+  console.log("Encryption of data1:(AES) "+encryptedAES.toString());
 
-  let decryptedAES = decryptAES(encryptedAES).toString();
-  console.log(decryptedAES.toString())
+  let decryptedAES = decryptAES(encryptedAES)
+  console.log("decryption of data1: "+decryptedAES.toString())
 
   let encryptedDES = encryptDES(data2);
-  console.log(encryptedDES.toString());
+  console.log("Encryption of data2:(DES) "+encryptedDES.toString());
 
-  let decryptedDES = decryptDES(encryptedDES).toString();
-  console.log(decryptedDES.toString())
+  let decryptedDES = decryptDES(encryptedDES)
+  console.log("decryption of data2: "+decryptedDES.toString())
 
-  let result = encryptedAES + encryptedDES;
-  console.log(result)
-  console.log("ss")
-  let res_data1 = result.slice(0,size/2)
-  console.log(res_data1)
-  console.log("ss")
-  let res_data2 = result.slice(size/2,size)
-  console.log(res_data2)
+  let resultEn = encryptedAES.toString() + encryptedDES.toString();
+  console.log("Result in encrypted form after combining: "+resultEn)
+  let resultDe = decryptedAES.toString() + decryptedDES.toString();
+  console.log("Result in decrypted form after combining: "+resultDe)
+  // console.log("ss")
+  // let res_data1 = result.slice(0,size/2)
+  // console.log(res_data1)
+  // console.log("ss")
+  // let res_data2 = result.slice(size/2,size)
+  // console.log(res_data2)
 
-  console.log((res_data1+res_data2))
+  // console.log((res_data1+res_data2))
   
   res.send('uploaded');
 });
