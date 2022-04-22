@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FILE UPLOAD DEMO</title>
+</head>
+
+<body>
+    <h1>Single File Upload Demo</h1>
+    <form enctype="multipart/form-data" method="POST">
+        <span>Upload Profile Picture:</span>
+        <input type="file" id="mypic" name="mypic" required/> <br>
+        <input type="button" id="btn" value="submit">
+    </form>
+</body>
+<script>
+    //upload file from js on btn click and submit to 127.0.0.1:3000/upload
+    document.getElementById('btn').addEventListener('click', function() {
+        var formData = new FormData();
+        formData.append('mypic', document.getElementById('mypic').files[0]);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://127.0.0.1:3000/upload');
+        xhr.send(formData);
+    });
+</script>
+
+</html>

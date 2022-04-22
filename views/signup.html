@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Register</title>  <!-- CORE CSS-->	
+		   
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+	<script type="module">
+	// Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBhAkLeVH4L1h_P3TkA1uV45gU75jZs1ng",
+    authDomain: "fir-oauth-4679a.firebaseapp.com",
+    projectId: "fir-oauth-4679a",
+    storageBucket: "fir-oauth-4679a.appspot.com",
+    messagingSenderId: "656541897358",
+    appId: "1:656541897358:web:df53dbab5ce040f294afdf",
+    measurementId: "G-KKM5K340JX"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+	</script>
+		<style type="text/css">
+			html,
+			body {
+				height: 100%;
+			}
+			html {
+				display: table;
+				margin: auto;
+			}
+			body {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.margin {
+			margin: 0 !important;
+			}
+		</style>
+	
+	</head>
+	
+	<body class="green">
+	<div id="login-page" class="row">
+		<div class="col s12 z-depth-6 card-panel">
+
+		<div class="login-form login-div">
+			<div class="row">
+				<div class="input-field col s12 center">
+					<p class="center  login-form-text" style="font-weight: 800;">REGISTER THEN VERIFY YOUR ACCOUNT</p>
+				</div>
+			</div>
+			<div class="row margin">
+				<div class="input-field col s12">
+					<i class="mdi-communication-email prefix" style="color: green;"></i>
+					<input id="email_field" type="email" class="validate" required>
+				</div>
+			</div>
+			<div class="row margin">
+				<div class="input-field col s12">
+					<i class="mdi-action-lock-outline prefix" style="color: green;"></i>
+					<input id="password_field" type="password" class="validate" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<button type="button" class="btn waves-effect green waves-light col s12" onclick="createAccount()">Register Now</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	function createAccount(){
+		
+		var userEmail = document.getElementById("email_field").value;
+		var userPass = document.getElementById("password_field").value;
+		console.log(userEmail,userPass)
+		$.ajax({
+			url:"http://localhost:3000/signup",
+			method:"GET",
+			data:{userEmail:userEmail,userPass:userPass},
+			success:function(response){
+				console.log(response)
+			}
+		})
+	}
+	</script>
+    </body>
+    </html>
+	
