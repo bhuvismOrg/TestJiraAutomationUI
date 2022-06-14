@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FILE UPLOAD DEMO</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity=
+        "sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+        crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+    <h1>Single File Upload Demo</h1>
+    <form enctype="multipart/form-data" method="POST">
+        <span>Upload Profile Picture:</span>
+        <input type="file" id="mypic" name="mypic" required/> <br>
+        <input type="button" id="btn" value="submit">
+        <input type="button" onclick="callDecrypt()" value="CallDecrypt">
+    </form>
+</body>
+<script>
+    //upload file from js on btn click and submit to 127.0.0.1:3000/upload
+    document.getElementById('btn').addEventListener('click', function() {
+       
+        var file = document.getElementById('mypic').files[0]
+        let filename = file.name
+        let extArr = filename.split('.');
+        var fileWithoutExt = extArr[0];
+        var ext = extArr[1];
+        var resultWithoutBase;
+        console.log(ext) 
+        var reader = new FileReader();
+        var result = '';
+        let resultBase64  = '';
+        let substrings;
+        
+        reader.onloadend = () => {
+            result = reader.result;
+            console.log(result);
+            substrings = result.split(',');
+            console.log(substrings)
+            resultWithoutBase = substrings[0];
+            resultBase64 = substrings[1];
+           
+
+            fetch('/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user: {
+                        name: filename,
+                        base64: resultBase64,
+                        beforeBase64:resultWithoutBase
+                    }
+                })
+            })
+            .then(response => console.log(response.text()))
+            .then(data => console.log(data))
+
+            
+           
+
+          /* var linkSource = result;
+            var downloadLink = document.createElement('a');
+            var newFileName = "Test101"
+            var fileName = newFileName+'.'+ext
+            downloadLink.href = linkSource
+            downloadLink.download = fileName
+            console.log(downloadLink)
+            downloadLink.click() */
+
+           
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function callDecrypt(){
+        var link;
+        var fileNameReceived;
+        fetch('/decrypt',{
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            link = data.link;
+            console.log(link);
+            fileNameReceived = data.name;
+            console.log(fileNameReceived)
+            let getExtArr = fileNameReceived.split('.');
+            let ext = getExtArr[1];
+            console.log(ext)
+            var linkSource = link;
+            var downloadLink = document.createElement('a');
+            var newFileName = "Test101"
+            var fileName = newFileName+'.'+ext
+            downloadLink.href = linkSource
+            downloadLink.download = fileName
+            console.log(downloadLink)
+            downloadLink.click()
+            
+        })
+        
+    }
+    
+</script>
+
+</html>

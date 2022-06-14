@@ -1,27 +1,296 @@
+
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>FILE UPLOAD DEMO</title>
-</head>
+  <title>Login page</title>
 
-<body>
-    <h1>Single File Upload Demo</h1>
-    <form enctype="multipart/form-data" method="POST">
-        <span>Upload Profile Picture:</span>
-        <input type="file" id="mypic" name="mypic" required/> <br>
-        <input type="button" id="btn" value="submit">
-    </form>
-</body>
+  </head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="icon" href="adminfavicon.png">
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+<link rel="icon" href="">
+<style>
+body {
+    background-color:#D6EAF8;
+}
+.row
+{
+    
+    
+    width:100%;
+    margin:200px auto;
+   
+
+}
+.left{
+    margin:auto;
+    text-align:center;
+   
+}
+
+.left .symbol
+{
+    font-size:40px;
+    font-weight:bold;
+    margin:auto;
+    letter-spacing:5px;
+    font-family:verdana,sans-serif;
+    color:#008000 ;
+}
+ .left .content {
+    font-size:30px;
+    font-weight:150;
+    font-family:verdana,sans-serif;
+    color:#000000 ;
+    margin:auto;
+    
+} 
+@media only screen and (max-width:600px)
+{   .left .symbol,.left .content
+    {
+        
+    font-size:22px;
+    
+       
+    }
+    .left .content
+    {
+      font-size:20px;
+    font-weight:bold;
+
+    }
+}
+.right{
+ 
+   width:100%;
+   
+  
+}
+
+.right form {
+    box-shadow:2px 2px 2px 2px grey;
+    max-width:500px;
+    background-color:#ffffff;
+    width:100%;
+    padding:20px;
+   
+}
+.right form small{
+    font-style:italic;
+    font-size:16px;
+    color:#000000;
+    
+}
+
+.form-control{
+    height:50px;
+}
+#signup {   
+  width:100%;
+    margin: auto;
+    
+    display:none;
+  z-index:1;
+  top:0px;
+position:absolute;
+transition:1s;
+transform:scale(0.9);
+}
+
+
+
+
+#signup .insiderow{
+    background-color:#ffffff;
+    max-width:500px;
+    margin:0px auto;
+  width:100%;
+  margin-bottom:10px;
+  text-align:center;
+  border:1px solid black;
+  z-index:1;
+}
+.signinside label{
+    font-weight:bold;
+    
+}
+#dpass,#strong,#num{
+  color:red;
+  font-size:16px;
+  text-align:left;
+}
+#display{
+  text-align:left;
+}
+</style>
 <script>
-    //upload file from js on btn click and submit to 127.0.0.1:3000/upload
-    document.getElementById('btn').addEventListener('click', function() {
-        var formData = new FormData();
-        formData.append('mypic', document.getElementById('mypic').files[0]);
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://127.0.0.1:3000/upload');
-        xhr.send(formData);
-    });
-</script>
+
+ function close1(){
+    document.getElementById("signup").style.display="none";
+    document.getElementById("main").style.cssText="filter:blur(0px)";
+    }
+    function signup(){
+     document.getElementById("signup").style.display="block";
+     document.getElementById("main").style.cssText="filter:blur(4px)";
+    //  document.getElementById("formm").style.cssText="filter:blur(4px)";
+
+ }
+
+ function register(){
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var pass1 = document.getElementById('pass1').value;
+    var pass2 = document.getElementById('pass2').value;
+    var number = document.getElementById('number').value;
+
+    if(pass1 === pass2){
+      fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user: {
+                name: name,
+                email: email,
+                pass1:pass1,
+                pass2:pass2,
+                number:number
+            }
+        })
+      })
+      .then(function(response) {
+        return response.json();
+    })
+      .then(function(data){
+        console.log(data.response)
+        if(data.response === "Inserted"){
+          alert("Successfully Registered!");
+          
+        }
+      })
+     
+    } else {
+      alert("Passwords won't match")
+      document.getElementById('pass2').value = "";
+    }
+    
+    
+
+ }
+
+ function login(){
+    var email = document.getElementById('email1').value;
+    var password = document.getElementById('password1').value;
+
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          user: {
+              
+              email: email,
+              password:password
+          }
+      })
+    })
+    .then(function(response) {
+      return response.json();
+  })
+  .then(function(data){
+    if(data.response === "Verified"){
+      alert("Success");
+      window.location = "second.html"
+    } else {
+      alert("UnSuccessful");
+    }
+  })
+    
+ }
+
+  </script>
+<body>  
+<!-- start of signup form -->
+<div class="container-fluid signup" id="signup">
+   
+    <div class="row insiderow">
+    <button id="signin" class="btn btn-primary btn-sm "  onclick="close1()"><i class="fa fa-close fa-2x"></i></button></center>
+      <h2 class="text-center" style="font-size:30px;">Register Here</h2>
+      
+      <div class="col-12 signinside">
+      <hr>
+      <form action="" method="post">
+      <div id="display"></div>
+        <input type="text" class="form-control"  autofocus="1" placeholder="Name" name="username" id="name" required></br>
+        <input type="email" class="form-control" placeholder="Email" name="email" id="email" required></br>
+        <div class='' id='strong'></div>
+        <input type="password" id='pass1' class="form-control" placeholder="Password" name="password"  required></br>
+        <div class='' id='dpass'></div>
+
+        <input type="password" id='pass2' class="form-control" placeholder="Confirm Password" name="cpassword"  required></br>
+          <div class='num' id='num'></div>
+        <input type="number" class="form-control" placeholder="Number" name="number" id="number" required></br>
+        <!-- <input type="text"  class="form-control" placeholder="DoB" name="date" id="date" onfocus="this.type='date'" required></br>
+        <label for="gender">Male:</label><input type="radio" class="form-control" name="gender" value="male" id="gender" required></br>
+        <label for="gender1">Female:</label><input type="radio" class="form-control" name="gender" value="femail" id="gender2" required></br> -->
+        <button id="signupBtn" onclick="register()" type="button" class="btn btn-success btn-lg btn-block">Submit</button><br>
+        </form>
+   
+      </div>
+    </div>
+  </div>
+  
+  <!-- End of Sign Up form -->
+
+
+  <div class="container-fluid main" id="main">
+   <div class="row">
+      <!-- Left column -->
+     <div class="col-12 col-sm left">
+      <b><p> <span class="symbol">Share Files</span></p><br/><p><span class="content">Share With The People You Know</span></b></p>
+     </div>
+     <!-- Right Column -->
+     <div class="col-12 col-sm right" >
+       <!-- Start of Login  form -->
+         
+       <form action="" id="formm">  
+         
+          <input type="email" placeholder="Email" name="email" class="form-control" autofocus="1"  id="email1" required></br>
+          
+          <!-- Postpend the eye to see password -->
+           <div class="input-group">
+           <input type="password" placeholder="Password" name="password" id="password1"  class="form-control" onchange="focus2()" required></br>
+           <div class="input-group-apend">
+           <span class="input-group-text" onclick="change()"><i class="fa fa-key fa-2x" style="height:35px;"  ></i></span>
+
+           </div>
+          
+          </div>
+          <!-- End of PostPend --></br>
+        <input type='checkbox' name="check" id='check'  ><label for="check">&nbsp;<strong>Remember me</strong></label>
+      <button type="button" onclick="login()" id="loginBtn"  class="btn btn-primary btn-sm btn-block">Login </button></br>
+
+                   <small>Don't Have an Account?<u style="cursor:pointer;color:#16A085;"><b onclick="signup()">Sign-Up</b></u> Here</small>
+          </form>
+   
+
+    <!-- End of Login form -->
+     </div>
+   </div>
+  
+</body>
 
 </html>

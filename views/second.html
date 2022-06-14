@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" href="adminfavicon.png">
+   <!-- JS, Popper.js, and jQuery -->
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin:0px;
+        padding:0px;
+        background-color: #faf8f0;
+    }
+    .admin,.list{
+        height:630px;
+        
+    }
+    .insideadmin,.insidelist{
+        border-radius:10px;
+        background-color: #ffffff;
+        height:600px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    }
+    .shared{
+        border-radius:10px;
+        background-color: #ffffff;
+       
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    }
+    .forms{
+        width:80%;
+        margin:auto;
+    }
+
+    @media only screen and (max-width:600px){
+        .admin,.list
+        {
+           
+        }
+    }
+
+    .content{
+        border-radius:10px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height:486px;
+        background-color: #ffffff;
+    }
+    .listed{
+        border-radius:10px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height:534px;
+        background-color: #ffffff;
+    }
+    thead{
+        font-weight:bold;
+        text-transform: capitalize;
+    }
+   tbody{
+    font-weight: 600;
+    color: #000000;
+   }
+*::-webkit-scrollbar {
+  width:4px;
+}
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border-radius: 20px;
+  border: 1px solid #000000;
+}
+</style>
+<body>
+    <div class="container-fluid border">
+      <div class="row mt-5">
+        <div class="col-sm-12 col-md-12 col-lg-6 admin">
+            <div class="insideadmin">
+                <h3 class="text-center">Upload Files</h3>
+               
+                    <form enctype="multipart/form-data" class="forms">
+                        <input type="file" name="" class="form-control">
+                    </form>
+                    <hr>
+                <div class="content">
+                   
+                   
+                        <table class="table text-center" >
+                            <thead class="table-dark"><tr>
+                                <td>sl</td>
+                                <td>Name</td>
+                                <td>date</td>
+                                <td>share</td>
+                            </tr>
+                           </thead>
+                            <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Maria Anders</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Roland Mendel</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Helen Bennett</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Small button</button>da</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                  </tr>
+                            </tbody>
+                         
+                        
+                      </table>
+
+
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 list ">
+            <div class="insidelist">
+                  <h3 class="text-center">Files List</h3><hr>
+                     <div class="listed">
+                        <table class="table text-center" >
+                            <thead class="table-dark"><tr>
+                                <td>sl</td>
+                                <td>From</td>
+                                <td>File Name</td>
+                                <td>date</td>
+                                <td>Download</td>
+                            </tr>
+                           </thead>
+                            <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Maria Anders</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Germany</td>
+                                    <td>Germany</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Mexico</td>
+                                    <td>Mexico</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Roland Mendel</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Austria</td>
+                                    <td>Austria</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Helen Bennett</td>
+                                    <td>Francisco Chang</td>
+                                    <td>UK</td>
+                                    <td>UK</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Yoshi Tannamuri</td>
+                                    <td>Francisco Chang</td>
+                                    <td>Canada</td>
+                                  </tr>
+                            </tbody>
+                         
+                        
+                      </table>
+                     </div>
+                
+            </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 mb-5" >
+           <div class="shared">
+            <h3 class="text-center">Shared Files</h3><hr>
+            <div class="sfiles">
+               <table class="table text-center" >
+                   <thead class="table-dark"><tr>
+                       <td>sl</td>
+                       <td>To</td>
+                       <td>File Name</td>
+                       <td>date</td>
+                       <td>Access</td>
+                   </tr>
+                  </thead>
+                   <tbody>
+                         <tr>
+                           <td>1</td>
+                           <td>Maria Anders</td>
+                           <td>Francisco Chang</td>
+                           <td>Germany</td>
+                           <td>Germany</td>
+                         </tr>
+                         <tr>
+                           <td>1</td>
+                           <td>Francisco Chang</td>
+                           <td>Francisco Chang</td>
+                           <td>Mexico</td>
+                           <td>Mexico</td>
+                         </tr>
+                         <tr>
+                           <td>1</td>
+                           <td>Roland Mendel</td>
+                           <td>Francisco Chang</td>
+                           <td>Austria</td>
+                           <td>Austria</td>
+                         </tr>
+                         <tr>
+                           <td>1</td>
+                           <td>Helen Bennett</td>
+                           <td>Francisco Chang</td>
+                           <td>UK</td>
+                           <td>UK</td>
+                         </tr>
+                         <tr>
+                           <td>1</td>
+                           <td>Yoshi Tannamuri</td>
+                           <td>Francisco Chang</td>
+                           <td>Canada</td>
+                           <td>Canada</td>
+                         </tr>
+                         <tr>
+                           <td>1</td>
+                           <td>Yoshi Tannamuri</td>
+                           <td>Francisco Chang</td>
+                           <td>Canada</td>
+                           <td>Canada</td>
+                         </tr>
+                         <tr>
+                           <td>1</td>
+                           <td>Yoshi Tannamuri</td>
+                           <td>Francisco Chang</td>
+                           <td>Canada</td>
+                           <td>Canada</td>
+                         </tr>
+                         <tr>
+                           <td>1</td>
+                           <td>Yoshi Tannamuri</td>
+                           <td>Francisco Chang</td>
+                           <td>Canada</td>
+                           <td>Canada</td>
+                         </tr>
+                      
+                   
+                   </tbody>
+                
+               
+             </table>
+           </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
