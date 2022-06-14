@@ -84,7 +84,7 @@ const decryptDES = (encrypted,key) => {
   return result;
 }
 
-//handle post file upload
+// EncryptCall **
 app.post('/upload', function(req, res){
   var name = req.body.user.name;
   var base64 = req.body.user.base64
@@ -117,6 +117,7 @@ app.post('/upload', function(req, res){
   res.send("Uploaded");
 });
 
+// DecryptCall **
 app.get('/decrypt', function(req,res){
   var base64Url = '';
   var filename;
@@ -166,6 +167,7 @@ app.get('/decrypt', function(req,res){
  
 })
 
+// Register ***
 app.post('/register', function(req,res){
   var name = req.body.user.name;
   var email = req.body.user.email;
@@ -190,6 +192,7 @@ app.post('/register', function(req,res){
   })
 })
 
+// Login ***
 app.post('/login',function(req,res){
   var email = req.body.user.email;
   var password = req.body.user.password;
@@ -202,18 +205,17 @@ app.post('/login',function(req,res){
     console.log(result.length);
     if(result.length > 0){
       let responseJSON = {
-        response:"Verified",
-        
+        response:"Verified", 
       }
       res.send(responseJSON)
 
     } else {
       responseJSON = {
         response:"Not Verified",
-        
       }
       res.send(responseJSON);
     }
   })
 })
+
 app.listen(3000);
