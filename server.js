@@ -3,6 +3,7 @@ var express = require('express');
 var crypto = require('crypto')
 var cors = require('cors')
 var mysql = require('mysql');
+var bodyParser = require('body-parser');
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -13,6 +14,8 @@ var con = mysql.createConnection({
 
 var app = express();
 //app.use(cors())
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json());
 
 //path to directory where html files are stored
@@ -89,15 +92,15 @@ app.post('/upload', function(req, res){
   var name = req.body.user.name;
   var base64 = req.body.user.base64
   var beforeBase64 = req.body.user.beforeBase64
-  console.log(name,base64,beforeBase64);
+ // console.log(name,base64,beforeBase64);
 
   console.log("Length => "+ base64.length);
 
   var data1 = base64.slice(0,base64.length/2);
   var data2 = base64.slice(base64.length/2,base64.length);
 
-  console.log("Len Data1 => "+data1);
-  console.log("Len Data2 => "+data2);
+ // console.log("Len Data1 => "+data1);
+ // console.log("Len Data2 => "+data2);
   
   let encryptedAES = encryptAES(data1).toString('hex');
   console.log("encryptedAES => " +encryptedAES.length);
@@ -111,10 +114,14 @@ app.post('/upload', function(req, res){
     con.query(sql, function(err, result){
       if(err) throw err;
       console.log("Inserted");
+      let responseJSON = {
+        response:"Uploaded", 
+      }
+      res.send(responseJSON)
   })
   })
 
-  res.send("Uploaded");
+  
 });
 
 // DecryptCall **

@@ -91,7 +91,8 @@
                 <h3 class="text-center">Upload Files</h3>
                
                     <form enctype="multipart/form-data" class="forms">
-                        <input type="file" name="" class="form-control">
+                        <input type="file" name="mypic" id="myfile" required class="form-control"><br>
+                        <button type="button" id="uploadBtn" class="btn btn-primary btn-sm">Upload</button>
                     </form>
                     <hr>
                 <div class="content">
@@ -437,5 +438,58 @@
         </div>
       </div>
     </div>
+
+    <script>
+      document.getElementById('uploadBtn').addEventListener('click', function() {
+       
+        var file = document.getElementById('myfile').files[0]
+        let filename = file.name
+        let extArr = filename.split('.');
+        var fileWithoutExt = extArr[0];
+        var ext = extArr[1];
+        var resultWithoutBase;
+         
+        var reader = new FileReader();
+        var result = '';
+        let resultBase64  = '';
+        let substrings;
+        
+        reader.onloadend = () => {
+            result = reader.result;
+            
+            substrings = result.split(',');
+            
+            resultWithoutBase = substrings[0];
+            resultBase64 = substrings[1];
+           
+
+            fetch('/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user: {
+                        name: filename,
+                        base64: resultBase64,
+                        beforeBase64:resultWithoutBase
+                    }
+                })
+            })
+            .then(function(response) {
+              return response.json();
+          })
+          .then(function(data){
+            if(data.response === "Uploaded"){
+              alert("Successfully Uploaded");
+              
+            } else {
+              alert("UnSuccessful");
+            }
+          })
+        };
+        reader.readAsDataURL(file);
+    });
+    </script>
 </body>
 </html>
