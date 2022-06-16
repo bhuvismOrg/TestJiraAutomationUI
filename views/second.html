@@ -119,7 +119,7 @@ border-radius:20px;
                   </br>
 
                      <center><form>
-                       <input type="text" class="form-control" id="name" placeholder="search"></br>
+                       <input type="text" class="form-control" id="name" placeholder="Search using Full Email"></br>
                        <button type="button" class="btn btn-info btn-lg btn-block"  onclick="submits()">Search</button>
                        <h1 id="inside"></h1>
 
@@ -159,7 +159,7 @@ border-radius:20px;
                    
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
-                              <td>FileNo</td>
+                              <td>Sl</td>
                               <td>Name</td>
                               <td>share</td>
                             </tr>
@@ -179,7 +179,7 @@ border-radius:20px;
         <div class="col-sm-12 col-md-12 col-lg-6 list ">
           <button type="button" onclick="logout()" class="btn btn-primary btn-sm">logout</button>
             <div class="insidelist">
-                  <h3 class="text-center">Files List</h3><hr>
+                  <h3 class="text-center">Shared to me</h3><hr>
                      <div class="listed">
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
@@ -205,7 +205,7 @@ border-radius:20px;
       <div class="row">
         <div class="col-12 mb-5" >
            <div class="shared">
-            <h3 class="text-center">Shared Files</h3><hr>
+            <h3 class="text-center">Shared by me</h3><hr>
             <div class="sfiles">
                <table class="table text-center" >
                    <thead class="table-dark"><tr>
@@ -216,7 +216,7 @@ border-radius:20px;
                        <td>Access</td>
                    </tr>
                   </thead>
-                   <tbody>
+                   <tbody id="sharedByMe">
                    
                    </tbody>
                 
@@ -315,6 +315,39 @@ border-radius:20px;
         table.innerHTML = rows
         console.log(data)
       })
+
+
+      fetch('/getFilesSharedByMe',{
+        method:'GET'
+      }).then(function(response) {
+              
+        return response.json();
+    })
+    .then(function(data){
+      var table = document.getElementById('sharedByMe')
+      var rows='';
+      var count=0;
+      for(let i=0;i<data.length;i++){
+        count++;
+        fetch('/getNameAndFileName',{
+          method:'POST',
+          headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user: {
+                nameid: data[i].cid,
+                fileid: data[i].fid,
+                
+            }
+        })
+
+        })
+        rows+='<tr><td>'+count+'</td><td>'+data[i].cid+'</td><td>'+data[i].fid+'</td><td></td><td>'+data[i].access+'</td></tr>'
+      }
+      table.innerHTML = rows
+      console.log(data)
+    })
     
     }
 var fsid;
@@ -385,7 +418,6 @@ function sharing(ids){
       body: JSON.stringify({
           user: {
               cid:ids
-
           }
       })
     })
@@ -393,7 +425,7 @@ function sharing(ids){
       return response.json();
   })
   .then(function(data){
-    if(data.response === "Inserted"){
+    if(data.response === "Given Access"){
     alert("Success")
 
     } 
@@ -401,6 +433,8 @@ function sharing(ids){
    
 
 }
+
+
 
     </script>
 </body>

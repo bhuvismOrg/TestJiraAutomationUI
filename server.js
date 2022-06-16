@@ -312,22 +312,28 @@ router.get('/retrieve2',function(req,res){
 
 //share the files to the required person by giving access 
 router.post('/retrieve3',function(req,res){
-  console.log("In Retrieve3");
+    console.log("In Retrieve3");
 
-  cid= req.body.user.cid;
-  access=1;
-  var sql = `INSERT INTO share(aid,cid,fid,access) VALUES('${sess.userid}','${cid}','${fid}','${access}')`;
-  con.query(sql, function(err, result){
-    if(err) throw err;
-    let responseJSON = {
-      response:"Inserted",
+    cid= req.body.user.cid;
+    access=1;
+    var sql = `INSERT INTO share(aid,cid,fid,access) VALUES('${sess.userid}','${cid}','${fid}','${access}')`;
+    con.query(sql, function(err, result){
+      if(err) throw err;
+      let responseJSON = {
+        response:"Given Access",
+        
+      }
+      res.send(responseJSON)
       
-    }
-    res.send(responseJSON)
-    
+  })
 })
 
- 
+router.get('/getFilesSharedByMe', function(req,res){
+  var sql = `SELECT * FROM share WHERE aid='${sess.userid}' order by id desc`;
+  con.query(sql, function(err, result){
+    if(err) throw err;
+    res.send(JSON.stringify(result));
+  })
 })
 
 
