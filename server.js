@@ -3,7 +3,18 @@ var express = require('express');
 var crypto = require('crypto')
 var cors = require('cors')
 var mysql = require('mysql');
-var bodyParser = require('body-parser');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const router = express.Router();
+const app = express();
+
+app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
+app.use(bodyParser.json());      
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/views'));
+
+
+var sess;
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -12,18 +23,17 @@ var con = mysql.createConnection({
   database: "mydb"
 });
 
-var app = express();
+
 //app.use(cors())
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json());
 
+
 //path to directory where html files are stored
 app.use(express.static('views'));
 
-app.get('/', function(req, res){
-  res.sendFile('index.html');
-});
+
 
 const algorithmAES = 'aes-256-cbc';
 const algorithmDES = 'des-ede3-cbc';
@@ -87,11 +97,32 @@ const decryptDES = (encrypted,key) => {
   return result;
 }
 
+router.get('/', function(req, res){
+  sess = req.session;
+ 
+  if(sess.userid){
+    
+    res.sendFile('second.html',{root: 'views'})
+  } else{
+    
+    res.sendFile('first.html',{root: 'views'})
+  } 
+  
+});
+
 // EncryptCall **
-app.post('/upload', function(req, res){
+router.post('/upload', function(req, res){
+  sess = req.session;
   var name = req.body.user.name;
   var base64 = req.body.user.base64
   var beforeBase64 = req.body.user.beforeBase64
+
+  if(sess.userid){
+    console.log(sess.userid);
+  } else {
+    console.log("NULL");
+  }
+  
  // console.log(name,base64,beforeBase64);
 
   console.log("Length => "+ base64.length);
@@ -108,9 +139,9 @@ app.post('/upload', function(req, res){
  let encryptedDES = encryptDES(data2).toString('hex');
  console.log("encryptedDES => " +encryptedDES.length);
 
-  con.connect(function(err){
-    if(err) throw err;
-    var sql = `INSERT INTO info(name,beforeBase64,en1,en2,keyAES,keyDES) VALUES('${name}','${beforeBase64}','${encryptedAES}','${encryptedDES}','${keyAES}','${keyDES}')`;
+  
+    
+    var sql = `INSERT INTO info(name,beforeBase64,en1,en2,keyAES,keyDES,userid) VALUES('${name}','${beforeBase64}','${encryptedAES}','${encryptedDES}','${keyAES}','${keyDES}','${sess.userid}')`;
     con.query(sql, function(err, result){
       if(err) throw err;
       console.log("Inserted");
@@ -119,13 +150,13 @@ app.post('/upload', function(req, res){
       }
       res.send(responseJSON)
   })
-  })
+ 
 
   
 });
 
 // DecryptCall **
-app.get('/decrypt', function(req,res){
+router.get('/decrypt', function(req,res){
   var base64Url = '';
   var filename;
   var responseJSON;
@@ -175,7 +206,7 @@ app.get('/decrypt', function(req,res){
 })
 
 // Register ***
-app.post('/register', function(req,res){
+router.post('/register', function(req,res){
   var name = req.body.user.name;
   var email = req.body.user.email;
   var password = req.body.user.pass2;
@@ -183,8 +214,7 @@ app.post('/register', function(req,res){
 
   console.log(name,number);
 
-  con.connect( function(err){
-    if(err) throw err;
+ 
     var sql = `INSERT INTO users(name,email,password,number) VALUES('${name}','${email}','${password}','${number}')`;
     con.query(sql, function(err, result){
       if(err) throw err;
@@ -196,21 +226,24 @@ app.post('/register', function(req,res){
       
   })
   
-  })
+ 
 })
 
 // Login ***
-app.post('/login',function(req,res){
+router.post('/login',function(req,res){
   var email = req.body.user.email;
   var password = req.body.user.password;
 
-  console.log(email,password);
+  
 
   var sql = `SELECT * FROM users WHERE email='${email}' AND password='${password}'`;
   con.query(sql, function(err,result){
     if(err) throw err;
-    console.log(result.length);
+    
     if(result.length > 0){
+      sess = req.session;
+      sess.userid = result[0].id
+      
       let responseJSON = {
         response:"Verified", 
       }
@@ -225,4 +258,30 @@ app.post('/login',function(req,res){
   })
 })
 
+// Logout **
+router.get('/logout',function(req,res){
+  
+  req.session.destroy((err) => {
+    if(err) {
+        return console.log(err);
+    } else {
+      let responseJSON = {
+        response:"LoggedOut", 
+      }
+      res.send(responseJSON)
+    }
+    
+});
+})
+
+router.get('/retrieve',function(req,res){
+    console.log("In Retrieve");
+    var sql = `SELECT * FROM info WHERE userid='${sess.userid}'`;
+    con.query(sql, function(err, result){
+      if(err) throw err;
+      res.send(JSON.stringify(result));
+    })
+})
+
+app.use('/', router);
 app.listen(3000);

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="icon" href="adminfavicon.png">
    <!-- JS, Popper.js, and jQuery -->
    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
@@ -100,115 +101,13 @@
                    
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
-                                <td>sl</td>
+                                <td>FileNo</td>
                                 <td>Name</td>
-                                <td>date</td>
                                 <td>share</td>
                             </tr>
                            </thead>
-                            <tbody>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Maria Anders</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Roland Mendel</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Helen Bennett</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Small button</button>da</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td> <button type="button" class="btn btn-primary btn-sm">Small button</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                  </tr>
+                            <tbody id="filesList">
+                                  
                             </tbody>
                          
                         
@@ -220,6 +119,7 @@
             
         </div>
         <div class="col-sm-12 col-md-12 col-lg-6 list ">
+          <button type="button" onclick="logout()" class="btn btn-primary btn-sm">logout</button>
             <div class="insidelist">
                   <h3 class="text-center">Files List</h3><hr>
                      <div class="listed">
@@ -490,6 +390,41 @@
         };
         reader.readAsDataURL(file);
     });
+
+    function logout(){
+      fetch('/logout',{
+        method:'GET',
+      })
+      .then(function(response) {
+        return response.json();
+    })
+    .then(function(data){
+      if(data.response === "LoggedOut"){
+        window.location = "first.html"
+      } else {
+        alert("UnSuccessful");
+      }
+    })
+    }
+
+    window.onload = function(){
+        fetch('/retrieve',{
+          method:'GET'
+        })
+        .then(function(response) {
+          
+          return response.json();
+      })
+      .then(function(data){
+        var table = document.getElementById('filesList')
+        var rows='';
+        for(let i=0;i<data.length;i++){
+          rows+='<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td><button type="button" class="btn btn-primary btn-sm"><i class="material-icons">&#xe80d;</i></button></td></tr>'
+        }
+        table.innerHTML = rows
+        console.log(data)
+      })
+    }
     </script>
 </body>
 </html>
