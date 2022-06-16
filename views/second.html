@@ -83,9 +83,67 @@
   border-radius: 20px;
   border: 1px solid #000000;
 }
+.pop{
+  
+  width:100%;
+  height:80%;
+    margin: auto;
+
+  display:none;
+  z-index:1; 
+  top:40px;
+position:absolute;
+transition:3s;
+transform:scale(0.9);
+color:#000000;
+
+}
+.insidepop {
+    background-color: #878787;
+
+     height:100%;
+     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+border-radius:20px;
+}
+.insidepop .form-control{
+  width:60%;
+}
 </style>
 <body>
     <div class="container-fluid border">
+      <div class="row pop " id="pop">
+        <div class="col-12 " id="">
+             
+                  <div class="insidepop">
+                       <button id="signin" style="float:right;" class="btn btn-danger btn-sm "  onclick="close1()"><i class="fa fa-close fa-2x"></i></button>
+                  </br>
+
+                     <center><form>
+                       <input type="text" class="form-control" id="name" placeholder="search"></br>
+                       <button type="button" class="btn btn-info btn-lg btn-block"  onclick="submits()">Search</button>
+                       <h1 id="inside"></h1>
+
+                     </form></center>
+                     <table class="table text-center" >
+                      <thead class="table-dark"><tr>
+                          
+                          <td>ID</td>
+                          <td>Name</td>
+                          <td>Email</td>
+                          <td>Confirm</td>
+                      </tr>
+                     </thead>
+                      <tbody id="NamesList">
+                            
+                      </tbody>
+                   
+                  
+                </table>
+                 </div>
+                
+
+        </div>
+      </div>
       <div class="row mt-5">
         <div class="col-sm-12 col-md-12 col-lg-6 admin">
             <div class="insideadmin">
@@ -101,9 +159,9 @@
                    
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
-                                <td>FileNo</td>
-                                <td>Name</td>
-                                <td>share</td>
+                              <td>FileNo</td>
+                              <td>Name</td>
+                              <td>share</td>
                             </tr>
                            </thead>
                             <tbody id="filesList">
@@ -133,120 +191,7 @@
                             </tr>
                            </thead>
                             <tbody>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Maria Anders</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Germany</td>
-                                    <td>Germany</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Mexico</td>
-                                    <td>Mexico</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Roland Mendel</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Austria</td>
-                                    <td>Austria</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Helen Bennett</td>
-                                    <td>Francisco Chang</td>
-                                    <td>UK</td>
-                                    <td>UK</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Yoshi Tannamuri</td>
-                                    <td>Francisco Chang</td>
-                                    <td>Canada</td>
-                                  </tr>
+                        
                             </tbody>
                          
                         
@@ -272,63 +217,6 @@
                    </tr>
                   </thead>
                    <tbody>
-                         <tr>
-                           <td>1</td>
-                           <td>Maria Anders</td>
-                           <td>Francisco Chang</td>
-                           <td>Germany</td>
-                           <td>Germany</td>
-                         </tr>
-                         <tr>
-                           <td>1</td>
-                           <td>Francisco Chang</td>
-                           <td>Francisco Chang</td>
-                           <td>Mexico</td>
-                           <td>Mexico</td>
-                         </tr>
-                         <tr>
-                           <td>1</td>
-                           <td>Roland Mendel</td>
-                           <td>Francisco Chang</td>
-                           <td>Austria</td>
-                           <td>Austria</td>
-                         </tr>
-                         <tr>
-                           <td>1</td>
-                           <td>Helen Bennett</td>
-                           <td>Francisco Chang</td>
-                           <td>UK</td>
-                           <td>UK</td>
-                         </tr>
-                         <tr>
-                           <td>1</td>
-                           <td>Yoshi Tannamuri</td>
-                           <td>Francisco Chang</td>
-                           <td>Canada</td>
-                           <td>Canada</td>
-                         </tr>
-                         <tr>
-                           <td>1</td>
-                           <td>Yoshi Tannamuri</td>
-                           <td>Francisco Chang</td>
-                           <td>Canada</td>
-                           <td>Canada</td>
-                         </tr>
-                         <tr>
-                           <td>1</td>
-                           <td>Yoshi Tannamuri</td>
-                           <td>Francisco Chang</td>
-                           <td>Canada</td>
-                           <td>Canada</td>
-                         </tr>
-                         <tr>
-                           <td>1</td>
-                           <td>Yoshi Tannamuri</td>
-                           <td>Francisco Chang</td>
-                           <td>Canada</td>
-                           <td>Canada</td>
-                         </tr>
-                      
                    
                    </tbody>
                 
@@ -382,6 +270,7 @@
           .then(function(data){
             if(data.response === "Uploaded"){
               alert("Successfully Uploaded");
+              location.reload();
               
             } else {
               alert("UnSuccessful");
@@ -418,13 +307,101 @@
       .then(function(data){
         var table = document.getElementById('filesList')
         var rows='';
+        var count=0;
         for(let i=0;i<data.length;i++){
-          rows+='<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td><button type="button" class="btn btn-primary btn-sm"><i class="material-icons">&#xe80d;</i></button></td></tr>'
+          count++;
+          rows+='<tr><td>'+count+'</td><td>'+data[i].name+'</td><td><button type="button" onclick="share(this.id)" id="'+data[i].id+'" class="btn btn-primary btn-sm"><i class="material-icons">&#xe80d;</i></button></td></tr>'
         }
         table.innerHTML = rows
         console.log(data)
       })
+    
     }
+var fsid;
+    function share(id){
+      document.getElementById('pop').style.display="block";
+      document.getElementById('inside').innerHTML=id;
+      fsid=id;
+      }
+      function close1(){
+    document.getElementById("pop").style.display="none";
+    document.getElementById("NamesList").deleteRow(0);
+    document.getElementById("name").value=" ";
+
+    }
+
+
+    //search name to share
+function submits(){
+  var email=document.getElementById("name").value;
+  
+  fetch('/retrieve1', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          user: {
+              emails: email,
+              fid:fsid
+
+          }
+      })
+    })
+    .then(function(response) {
+      return response.json();
+  })
+  .then(function(data){
+    if(data.response === "done"){
+    console.log("g4g");
+
+      fetch('/retrieve2',{
+          method:'GET'
+        })
+        .then(function(response) {
+          return response.json();
+      })
+      .then(function(data){
+        var table = document.getElementById('NamesList')
+        var rows='';
+        var count=0;
+        for(let i=0;i<data.length;i++){
+          count++;
+          rows+='<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td>'+data[i].email+'</td><td><button type="button" class="btn btn-info btn-lg" id="'+data[i].id+'" onclick="sharing(this.id)">Access</button></td></tr>'
+        }
+        table.innerHTML = rows
+      console.log(data);
+      })
+
+    } 
+  })
+}
+function sharing(ids){
+  fetch('/retrieve3', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          user: {
+              cid:ids
+
+          }
+      })
+    })
+    .then(function(response) {
+      return response.json();
+  })
+  .then(function(data){
+    if(data.response === "Inserted"){
+    alert("Success")
+
+    } 
+  })
+   
+
+}
+
     </script>
 </body>
 </html>

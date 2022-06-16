@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/views'));
 
 
-var sess;
+var sess,emails,fid;
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -274,14 +274,62 @@ router.get('/logout',function(req,res){
 });
 })
 
+//retieve uploaded files
 router.get('/retrieve',function(req,res){
     console.log("In Retrieve");
-    var sql = `SELECT * FROM info WHERE userid='${sess.userid}'`;
+    var sql = `SELECT * FROM info WHERE userid='${sess.userid}' order by id desc`;
     con.query(sql, function(err, result){
       if(err) throw err;
       res.send(JSON.stringify(result));
     })
 })
+
+
+
+//post the email to share
+router.post('/retrieve1',function(req,res){
+  console.log("In Retrieve1");
+
+  emails= req.body.user.emails;
+  fid=req.body.user.fid;
+      let responseJSON = {
+        response:"done", 
+      }
+      res.send(responseJSON)
+
+ 
+})
+
+//retrieve the details of a person from email
+router.get('/retrieve2',function(req,res){
+  console.log("In Retrieve2");
+  var sql = `SELECT * FROM users WHERE email='${emails}'`;
+  con.query(sql, function(err, result){
+    if(err) throw err;
+    res.send(JSON.stringify(result));
+  })
+})
+
+//share the files to the required person by giving access 
+router.post('/retrieve3',function(req,res){
+  console.log("In Retrieve3");
+
+  cid= req.body.user.cid;
+  access=1;
+  var sql = `INSERT INTO share(aid,cid,fid,access) VALUES('${sess.userid}','${cid}','${fid}','${access}')`;
+  con.query(sql, function(err, result){
+    if(err) throw err;
+    let responseJSON = {
+      response:"Inserted",
+      
+    }
+    res.send(responseJSON)
+    
+})
+
+ 
+})
+
 
 app.use('/', router);
 app.listen(3000);
