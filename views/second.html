@@ -190,7 +190,7 @@ border-radius:20px;
                                 <td>Download</td>
                             </tr>
                            </thead>
-                            <tbody>
+                            <tbody id="sharedToMe">
                         
                             </tbody>
                          
@@ -327,9 +327,13 @@ border-radius:20px;
       var table = document.getElementById('sharedByMe')
       var rows='';
       var count=0;
-      for(let i=0;i<data.length;i++){
-        count++;
-        fetch('/getNameAndFileName',{
+      let name;
+      let filename;
+      var wholeData = data
+      for(let i=0;i<wholeData.length;i++){
+        
+        
+       fetch('/getNameAndFileName',{
           method:'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -342,12 +346,73 @@ border-radius:20px;
             }
         })
 
-        })
-        rows+='<tr><td>'+count+'</td><td>'+data[i].cid+'</td><td>'+data[i].fid+'</td><td></td><td>'+data[i].access+'</td></tr>'
+        }).then(function(response) {
+              
+          return(response.json());
+      }).then(function(data){
+        console.log(data)
+        console.log(wholeData)
+        name = data[0].name;
+        filename = data[1].filename
+        count++;
+        let dateTime = new Date(wholeData[i].Date);
+        rows+='<tr><td>'+count+'</td><td>'+name+'</td><td>'+filename+'</td><td>'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+dateTime.getHours()+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+'</td><td>'+wholeData[i].access+'</td></tr>' 
+        table.innerHTML = rows
+      })
+      
       }
-      table.innerHTML = rows
+      
       console.log(data)
     })
+
+
+    fetch('/getFilesSharedToMe',{
+      method:'GET'
+    }).then(function(response) {
+            
+      return response.json();
+  })
+  .then(function(data){
+    var table = document.getElementById('sharedToMe')
+    var rows='';
+    var count=0;
+    let name;
+    let filename;
+    var wholeData = data
+    for(let i=0;i<wholeData.length;i++){
+      
+      
+     fetch('/getNameAndFileName',{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          user: {
+              nameid: data[i].aid,
+              fileid: data[i].fid,
+              
+          }
+      })
+
+      }).then(function(response) {
+            
+        return(response.json());
+    }).then(function(data){
+      console.log(data)
+      console.log(wholeData)
+      name = data[0].name;
+      filename = data[1].filename
+      count++;
+      let dateTime = new Date(wholeData[i].Date);
+      rows+='<tr><td>'+count+'</td><td>'+name+'</td><td>'+filename+'</td><td>'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+dateTime.getHours()+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+'</td><td><button type="button" onclick="download(this.id)" id="'+wholeData[i].fid+'" class="btn btn-primary btn-sm"><i class="material-icons">&#xe2c4;</i></button></td></tr>' 
+      table.innerHTML = rows
+    })
+    
+    }
+    
+    console.log(data)
+  })
     
     }
 var fsid;
@@ -427,12 +492,50 @@ function sharing(ids){
   .then(function(data){
     if(data.response === "Given Access"){
     alert("Success")
-
+    location.reload();
     } 
   })
    
 
 }
+
+function download(id){
+  console.log(id)
+
+  fetch('/decrypt', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        user: {
+            fid:id
+        }
+    })
+    
+  })
+  .then(function(response) {
+    return response.json();
+})
+.then(function(data) {
+    link = data.link;
+    console.log(link);
+    fileNameReceived = data.name;
+    console.log(fileNameReceived)
+    let getExtArr = fileNameReceived.split('.');
+    let ext = getExtArr[1];
+    console.log(ext)
+    var linkSource = link;
+    var downloadLink = document.createElement('a');
+    var newFileName = "Test101"
+    var fileName = newFileName+'.'+ext
+    downloadLink.href = linkSource
+    downloadLink.download = fileName
+    console.log(downloadLink)
+    downloadLink.click()
+    
+})
+  }
 
 
 

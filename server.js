@@ -156,13 +156,13 @@ router.post('/upload', function(req, res){
 });
 
 // DecryptCall **
-router.get('/decrypt', function(req,res){
+router.post('/decrypt', function(req,res){
+  var fileId = req.body.user.fid
   var base64Url = '';
   var filename;
   var responseJSON;
-  con.connect( function(err){
-    if(err) throw err;
-    var sql = 'SELECT * FROM info where id=18';
+  
+    var sql = `SELECT * FROM info where id='${fileId}'`;
     con.query(sql, function(err, result){
       if(err) throw err;
       console.log(result);
@@ -200,7 +200,7 @@ router.get('/decrypt', function(req,res){
       
   })
   
-  })
+ 
   
  
 })
@@ -336,6 +336,36 @@ router.get('/getFilesSharedByMe', function(req,res){
   })
 })
 
+router.post('/getNameAndFileName',function(req,res){
+  var nameId = req.body.user.nameid;
+  var fileId = req.body.user.fileid;
+
+  var sql=`SELECT * from users WHERE id='${nameId}'`;
+  con.query(sql, function(err,result){
+    if(result.length > 0){
+      var responseJson = [{
+        name:result[0].name
+      }]
+      var sql2=`SELECT * FROM info WHERE id='${fileId}'`;
+      con.query(sql2, function(err,result){
+        if(result.length > 0){
+          responseJson.push({filename:result[0].name})
+          console.log(JSON.stringify(responseJson));
+          res.send(JSON.stringify(responseJson))
+      }
+    })
+    
+    }
+  })
+})
+
+router.get('/getFilesSharedToMe', function(req,res){
+  var sql = `SELECT * FROM share WHERE cid='${sess.userid}' order by id desc`;
+  con.query(sql, function(err, result){
+    if(err) throw err;
+    res.send(JSON.stringify(result));
+  })
+})
 
 app.use('/', router);
 app.listen(3000);
