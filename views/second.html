@@ -230,54 +230,61 @@ border-radius:20px;
     <script>
       document.getElementById('uploadBtn').addEventListener('click', function() {
        
-        var file = document.getElementById('myfile').files[0]
-        let filename = file.name
-        let extArr = filename.split('.');
-        var fileWithoutExt = extArr[0];
-        var ext = extArr[1];
-        var resultWithoutBase;
-         
-        var reader = new FileReader();
-        var result = '';
-        let resultBase64  = '';
-        let substrings;
-        
-        reader.onloadend = () => {
-            result = reader.result;
-            
-            substrings = result.split(',');
-            
-            resultWithoutBase = substrings[0];
-            resultBase64 = substrings[1];
-           
+        const file = document.getElementById('myfile').files[0];
+        /*const formData = new FormData();
+        formData.append('avatar', files[0]);
+        console.log(formData)
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/upload');
+        xhr.send(formData);*/
 
-            fetch('/upload', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user: {
-                        name: filename,
-                        base64: resultBase64,
-                        beforeBase64:resultWithoutBase
-                    }
-                })
-            })
-            .then(function(response) {
-              return response.json();
-          })
-          .then(function(data){
-            if(data.response === "Uploaded"){
-              alert("Successfully Uploaded");
-              location.reload();
+          let filename = file.name
+          let extArr = filename.split('.');
+          var fileWithoutExt = extArr[0];
+          var ext = extArr[1];
+          var resultWithoutBase;
+          
+          var reader = new FileReader();
+          var result = '';
+          let resultBase64  = '';
+          let substrings;
+          
+        /* reader.onloadend = () => {
+              result = reader.result;
               
-            } else {
-              alert("UnSuccessful");
-            }
-          })
-        };
-        reader.readAsDataURL(file);
+              substrings = result.split(',');
+              
+              resultWithoutBase = substrings[0];
+              resultBase64 = substrings[1];
+            
+
+              fetch('/upload', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      user: {
+                          name: filename,
+                          base64: resultBase64,
+                          beforeBase64:resultWithoutBase
+                      }
+                  })
+              })
+              .then(function(response) {
+                return response.json();
+            })
+            .then(function(data){
+              if(data.response === "Uploaded"){
+                alert("Successfully Uploaded");
+                location.reload();
+                
+              } else {
+                alert("UnSuccessful");
+              }
+            })
+          };*/
+        // reader.readAsDataURL(file);
     });
 
     function logout(){
@@ -305,6 +312,9 @@ border-radius:20px;
           return response.json();
       })
       .then(function(data){
+        if(data.response === "LoggedOut"){
+          window.location = "first.html"
+        } else {
         var table = document.getElementById('filesList')
         var rows='';
         var count=0;
@@ -314,6 +324,7 @@ border-radius:20px;
         }
         table.innerHTML = rows
         console.log(data)
+      }
       })
 
 

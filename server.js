@@ -113,6 +113,8 @@ router.get('/', function(req, res){
 // EncryptCall **
 router.post('/upload', function(req, res){
   sess = req.session;
+  // let avatar = req.files.avatar;
+  // console.log("file"+avatar);
   var name = req.body.user.name;
   var base64 = req.body.user.base64
   var beforeBase64 = req.body.user.beforeBase64
@@ -277,11 +279,19 @@ router.get('/logout',function(req,res){
 //retieve uploaded files
 router.get('/retrieve',function(req,res){
     console.log("In Retrieve");
-    var sql = `SELECT * FROM info WHERE userid='${sess.userid}' order by id desc`;
-    con.query(sql, function(err, result){
-      if(err) throw err;
-      res.send(JSON.stringify(result));
-    })
+    if(sess.userid){
+      var sql = `SELECT * FROM info WHERE userid='${sess.userid}' order by id desc`;
+      con.query(sql, function(err, result){
+        if(err) throw err;
+        res.send(JSON.stringify(result));
+      })
+    } else {
+      let responseJSON = {
+        response:"LoggedOut"
+      }
+       res.send(JSON.stringify(responseJSON))
+    }
+    
 })
 
 
