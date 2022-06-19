@@ -249,9 +249,9 @@ border-radius:20px;
           let resultBase64  = '';
           let substrings;
           
-        /* reader.onloadend = () => {
+        reader.onloadend = () => {
               result = reader.result;
-              
+              console.log(result)
               substrings = result.split(',');
               
               resultWithoutBase = substrings[0];
@@ -283,8 +283,8 @@ border-radius:20px;
                 alert("UnSuccessful");
               }
             })
-          };*/
-        // reader.readAsDataURL(file);
+          };
+        reader.readAsDataURL(file);
     });
 
     function logout(){
@@ -312,9 +312,10 @@ border-radius:20px;
           return response.json();
       })
       .then(function(data){
+        console.log(data.length)
         if(data.response === "LoggedOut"){
           window.location = "first.html"
-        } else {
+        } else if(data.length > 0) {
         var table = document.getElementById('filesList')
         var rows='';
         var count=0;
@@ -324,6 +325,8 @@ border-radius:20px;
         }
         table.innerHTML = rows
         console.log(data)
+      } else {
+        document.getElementById('filesList').innerHTML = "No Records Found"
       }
       })
 
