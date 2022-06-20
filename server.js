@@ -159,10 +159,7 @@ function uploadToS3(req,res){
     Key: fileName , // file will be saved as testBucket/contacts.csv
     Body: JSON.stringify(data, null, 2)
 };
-// s3.getObject(params, function(s3Err, data){
-//   if (s3Err) throw s3Err;
-//   console.log(JSON.parse(data.Body.toString()).keyAES);
-// })
+
 s3.upload(params, function(s3Err, data){
   if (s3Err) throw s3Err;
   console.log(`File uploaded successfully at ${data.Location}`)
