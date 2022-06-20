@@ -316,6 +316,7 @@ router.post('/login',function(req,res){
       sess = req.session;
       sess.userid = result[0].id
       sess.name = result[0].name
+      sess.email = result[0].email
       let responseJSON = {
         response:"Verified",
         
@@ -381,10 +382,20 @@ router.post('/retrieve1',function(req,res){
 
   emails= req.body.user.emails;
   fid=req.body.user.fid;
-      let responseJSON = {
-        response:"done", 
-      }
-      res.send(responseJSON)
+  console.log(sess.email,emails);
+  if(sess.email === emails){
+    let responseJSON = {
+      response:"Share with other user!", 
+    }
+    res.send(responseJSON)
+  } else {
+    let responseJSON = {
+      response:"done", 
+    }
+    res.send(responseJSON)
+  }
+      
+      
 
  
 })

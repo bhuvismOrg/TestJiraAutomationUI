@@ -152,7 +152,7 @@ border-radius:20px;
                   </br>
 
                      <center><form>
-                       <input type="text" class="form-control" id="name" placeholder="Search using Full Email"></br>
+                       <input type="text" class="form-control" id="emailId" placeholder="Search using Full Email"></br>
                        <button type="button" class="btn btn-info btn-lg btn-block"  onclick="submits()">Search</button>
                        <h1 id="inside"></h1>
 
@@ -489,7 +489,7 @@ var fsid;
 
     //search name to share
 function submits(){
-  var email=document.getElementById("name").value;
+  var email=document.getElementById("emailId").value;
   
   fetch('/retrieve1', {
       method: 'POST',
@@ -509,7 +509,7 @@ function submits(){
   })
   .then(function(data){
     if(data.response === "done"){
-    console.log("g4g");
+      console.log("g4g");
 
       fetch('/retrieve2',{
           method:'GET'
@@ -529,7 +529,9 @@ function submits(){
       console.log(data);
       })
 
-    } 
+    } else {
+      alert(data.response)
+    }
   })
 }
 function sharing(ids){
