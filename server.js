@@ -7,6 +7,16 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const router = express.Router();
 const app = express();
+const AWS = require('aws-sdk');
+require('dotenv').config();
+var uuid = require('uuid')
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+});
+
+const fileName = uuid.v4()+'.txt';
 
 app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
 app.use(bodyParser.json());      
@@ -47,7 +57,7 @@ keyAES = crypto.createHash('sha256').update(String(keyAES)).digest('base64').sub
 keyAES2 = crypto.createHash('sha256').update(String(keyAES2)).digest('base64').substr(0,16)
 keyAES3 = crypto.createHash('sha256').update(String(keyAES2)).digest('base64').substr(0,24)
 
-// encrypt function - AES
+// encrypt function - AES - 256
 const encryptAES = (buffer) => {
   let iv = crypto.randomBytes(16)
   
@@ -59,7 +69,7 @@ const encryptAES = (buffer) => {
   return result;
 }
 
-// encrypt function - DES
+// encrypt function - AES - 128
 const encryptAES2 = (buffer) => {
   let iv = crypto.randomBytes(16)
   
@@ -70,6 +80,7 @@ const encryptAES2 = (buffer) => {
   return result;
 }
 
+// encrypt function - AES - 192
 const encryptAES3 = (buffer) => {
   let iv = crypto.randomBytes(16)
   
@@ -80,7 +91,7 @@ const encryptAES3 = (buffer) => {
   return result;
 }
 
-//decrypt function - AES
+//decrypt function - AES - 256
 const decryptAES = (encrypted,key) => {
   // get iv : the first 16 bytes
   let iv = encrypted.slice(0,16)
@@ -97,7 +108,7 @@ const decryptAES = (encrypted,key) => {
 }
 
 
-//decrypt function - AES2
+//decrypt function - AES - 128
 const decryptAES2 = (encrypted,key) => {
   // get iv : the first 16 bytes
   let iv = encrypted.slice(0,16)
@@ -110,7 +121,7 @@ const decryptAES2 = (encrypted,key) => {
   return result;
 }
 
-//decrypt function - AES3
+//decrypt function - AES - 192
 const decryptAES3 = (encrypted,key) => {
   // get iv : the first 16 bytes
   let iv = encrypted.slice(0,16)
@@ -135,6 +146,29 @@ router.get('/', function(req, res){
   } 
   
 });
+
+function uploadToS3(req,res){
+  console.log("in UploadToS3");
+  let data = {
+    keyAES:keyAES,
+    keyAES2:keyAES2,
+    keyAES3:keyAES3
+  }
+  const params = {
+    Bucket: 'bhuvanjain-test-bucket', // pass your bucket name
+    Key: fileName , // file will be saved as testBucket/contacts.csv
+    Body: JSON.stringify(data, null, 2)
+};
+// s3.getObject(params, function(s3Err, data){
+//   if (s3Err) throw s3Err;
+//   console.log(JSON.parse(data.Body.toString()).keyAES);
+// })
+s3.upload(params, function(s3Err, data){
+  if (s3Err) throw s3Err;
+  console.log(`File uploaded successfully at ${data.Location}`)
+  res.send(data.Location);
+})
+}
 
 // EncryptCall **
 router.post('/upload', function(req, res){
@@ -171,20 +205,34 @@ router.post('/upload', function(req, res){
  let encryptedAES3 = encryptAES3(data3).toString('hex');
  console.log("encryptedAES3 => " +encryptedAES3.length);
 
-  
-    
-    var sql = `INSERT INTO info(name,beforeBase64,en1,en2,en3,keyAES,keyAES2,keyAES3,userid) VALUES('${name}','${beforeBase64}','${encryptedAES}','${encryptedAES2}','${encryptedAES3}','${keyAES}','${keyAES2}','${keyAES3}','${sess.userid}')`;
-    con.query(sql, function(err, result){
-      if(err) throw err;
-      console.log("Inserted");
-      let responseJSON = {
-        response:"Uploaded", 
-      }
-      res.send(responseJSON)
-  })
- 
+ let data = {
+  keyAES:keyAES,
+  keyAES2:keyAES2,
+  keyAES3:keyAES3
+}
+const params = {
+  Bucket: 'bhuvanjain-test-bucket', // pass your bucket name
+  Key: fileName , // file will be saved as testBucket/contacts.csv
+  Body: JSON.stringify(data, null, 2)
+};
+// s3.getObject(params, function(s3Err, data){
+//   if (s3Err) throw s3Err;
+//   console.log(JSON.parse(data.Body.toString()).keyAES);
+// })
+s3.upload(params, function(s3Err, data){
+if (s3Err) throw s3Err;
+console.log(`File uploaded successfully at ${data.Location}`)
+var sql = `INSERT INTO info(name,beforeBase64,en1,en2,en3,keyAES,keyAES2,keyAES3,userid) VALUES('${name}','${beforeBase64}','${encryptedAES}','${encryptedAES2}','${encryptedAES3}','${keyAES}','${keyAES2}','${keyAES3}','${sess.userid}')`;
+con.query(sql, function(err, result){
+  if(err) throw err;
+  console.log("Inserted");
+  let responseJSON = {
+    response:"Uploaded", 
+  }
+  res.send(responseJSON)
+})
+})
 
-  
 });
 
 // DecryptCall **
