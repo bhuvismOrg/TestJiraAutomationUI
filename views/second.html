@@ -51,7 +51,7 @@
         border-radius:10px;
         overflow-y: scroll;
         overflow-x: hidden;
-        height:486px;
+        height:430px;
         background-color: #ffffff;
     }
     .listed{
@@ -147,8 +147,8 @@ border-radius:20px;
                 <h3 class="text-center">Upload Files</h3>
                
                     <form enctype="multipart/form-data" class="forms">
-                        <input type="file" name="mypic" id="myfile" required class="form-control"><br>
-                        <button type="button" id="uploadBtn" class="btn btn-primary btn-sm">Upload</button>
+                      <input type="file" name="mypic" id="myfile" required class="form-control"><br>
+                      <button type="button"  id="uploadBtn" class="btn btn-primary btn-sm">Upload</button>
                     </form>
                     <hr>
                 <div class="content">
@@ -174,8 +174,9 @@ border-radius:20px;
             
         </div>
         <div class="col-sm-12 col-md-12 col-lg-6 list ">
-          <button type="button" onclick="logout()" class="btn btn-primary btn-sm">logout</button>
             <div class="insidelist">
+              <button type="button" style="float:right" onclick="logout()" class="btn btn-primary btn-sm btn-block">logout</button>
+
                   <h3 class="text-center">Shared to me</h3><hr>
                      <div class="listed">
                         <table class="table text-center" >
