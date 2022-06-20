@@ -147,25 +147,6 @@ router.get('/', function(req, res){
   
 });
 
-function uploadToS3(req,res){
-  console.log("in UploadToS3");
-  let data = {
-    keyAES:keyAES,
-    keyAES2:keyAES2,
-    keyAES3:keyAES3
-  }
-  const params = {
-    Bucket: 'bhuvanjain-test-bucket', // pass your bucket name
-    Key: fileName , // file will be saved as testBucket/contacts.csv
-    Body: JSON.stringify(data, null, 2)
-};
-
-s3.upload(params, function(s3Err, data){
-  if (s3Err) throw s3Err;
-  console.log(`File uploaded successfully at ${data.Location}`)
-  res.send(data.Location);
-})
-}
 
 // EncryptCall **
 router.post('/upload', function(req, res){
@@ -212,10 +193,7 @@ const params = {
   Key: fileName , // file will be saved as testBucket/contacts.csv
   Body: JSON.stringify(data, null, 2)
 };
-// s3.getObject(params, function(s3Err, data){
-//   if (s3Err) throw s3Err;
-//   console.log(JSON.parse(data.Body.toString()).keyAES);
-// })
+
 s3.upload(params, function(s3Err, data){
 if (s3Err) throw s3Err;
 console.log(`File uploaded successfully at ${data.Location}`)
