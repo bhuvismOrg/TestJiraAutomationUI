@@ -105,10 +105,44 @@ border-radius:20px;
 .insidepop .form-control{
   width:60%;
 }
+.btns {
+  width: 150px;
+  background-color:  #043b9b;
+  border: none;
+  outline: none;
+  height: 49px;
+  border-radius: 49px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.5s;
+ display:block;
+ top:3px;
+}
+
+.btns:hover {
+  background-color:#03317f ;
+}
+
 </style>
 <body>
     <div class="container-fluid border">
-      <h5>LoggedIn as, <span id="name"></span></h5>
+        
+  <div class="row" style="height:80px ;background-color: #4481eb;">
+    <div class="col-6 ">
+
+      <h4 style="color:#f1eded;font-weight:400;font-size:1.5rem">HELLO, <span id="name" style="color:#ffffff;font-weight:bold;font-size:3rem;font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;">Shankar </span></h4>
+     
+     </div>
+    
+    <div class="col-6 mt-2">
+          <span style="float:right;">
+            <button type="submit"  class="btns solid" onclick="logout()">logout</button>
+          </span>
+  </div>
+
+      
       <div class="row pop " id="pop">
         <div class="col-12 " id="">
              
@@ -176,7 +210,7 @@ border-radius:20px;
         </div>
         <div class="col-sm-12 col-md-12 col-lg-6 list ">
             <div class="insidelist">
-              <button type="button" style="float:right" onclick="logout()" class="btn btn-primary btn-sm btn-block">logout</button>
+              
 
                   <h3 class="text-center">Shared to me</h3><hr>
                      <div class="listed">
