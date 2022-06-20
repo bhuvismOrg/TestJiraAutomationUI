@@ -211,7 +211,7 @@ router.post('/upload', function(req, res){
   keyAES3:keyAES3
 }
 const params = {
-  Bucket: 'bhuvanjain-test-bucket', // pass your bucket name
+  Bucket: 'project2022final', // pass your bucket name
   Key: fileName , // file will be saved as testBucket/contacts.csv
   Body: JSON.stringify(data, null, 2)
 };
@@ -222,7 +222,7 @@ const params = {
 s3.upload(params, function(s3Err, data){
 if (s3Err) throw s3Err;
 console.log(`File uploaded successfully at ${data.Location}`)
-var sql = `INSERT INTO info(name,beforeBase64,en1,en2,en3,keyAES,keyAES2,keyAES3,userid) VALUES('${name}','${beforeBase64}','${encryptedAES}','${encryptedAES2}','${encryptedAES3}','${keyAES}','${keyAES2}','${keyAES3}','${sess.userid}')`;
+var sql = `INSERT INTO info(name,beforeBase64,en1,en2,en3,keyAES,userid) VALUES('${name}','${beforeBase64}','${encryptedAES}','${encryptedAES2}','${encryptedAES3}','${fileName}','${sess.userid}')`;
 con.query(sql, function(err, result){
   if(err) throw err;
   console.log("Inserted");
@@ -251,40 +251,50 @@ router.post('/decrypt', function(req,res){
       let en1 = result[0].en1;
       let en2 = result[0].en2;
       let en3 = result[0].en3;
-      let key1 = result[0].keyAES;
-      let key2 = result[0].keyAES2;
-      let key3 = result[0].keyAES3;
+      let key = result[0].keyAES;
+      let key1 = '';
+      let key2 = '';
+      let key3 = '';
+      const params = {
+        Bucket: 'project2022final', // pass your bucket name
+        Key: key , // file will be saved as testBucket/contacts.csv
+        
+      };
+      s3.getObject(params, function(s3Err, data){
+        if (s3Err) throw s3Err;
+        key1 = JSON.parse(data.Body.toString()).keyAES;
+        key2 = JSON.parse(data.Body.toString()).keyAES2;
+        key3 = JSON.parse(data.Body.toString()).keyAES3;
+        console.log(JSON.parse(data.Body.toString()).keyAES);
 
-      console.log(name,beforeBase64,en1 ,en2);
+        let en1Buffer = Buffer.from(en1,'hex')
+        console.log(en1Buffer.length);
+        let decryptedAES = decryptAES(en1Buffer,key1);
+        console.log("decryptedAES => "+decryptedAES); 
+  
+        let en2Buffer = Buffer.from(en2,'hex')
+        console.log(en2Buffer.length);
+        let decryptedAES2 = decryptAES2(en2Buffer,key2);
+        console.log("decryptedAES2 => "+decryptedAES2)
+  
+        let en3Buffer = Buffer.from(en3,'hex')
+        console.log(en3Buffer.length);
+        let decryptedAES3 = decryptAES3(en3Buffer,key3);
+        console.log("decryptedAES3 => "+decryptedAES3)
+  
+        base64Url = beforeBase64 + ',' + decryptedAES + decryptedAES2 + decryptedAES3;
+        filename = name;
+        
+        
+        responseJSON = {
+          link:base64Url,
+          name:filename
+        }
+        responseJSON = JSON.stringify(responseJSON)
+        console.log(responseJSON);
+        res.send(responseJSON)
+      })
 
-    console.log(en1.length, en2.length);
-      let en1Buffer = Buffer.from(en1,'hex')
-      console.log(en1Buffer.length);
-      let decryptedAES = decryptAES(en1Buffer,key1);
-      console.log("decryptedAES => "+decryptedAES); 
-
-      let en2Buffer = Buffer.from(en2,'hex')
-      console.log(en2Buffer.length);
-      let decryptedAES2 = decryptAES2(en2Buffer,key2);
-      console.log("decryptedAES2 => "+decryptedAES2)
-
-      let en3Buffer = Buffer.from(en3,'hex')
-      console.log(en3Buffer.length);
-      let decryptedAES3 = decryptAES3(en3Buffer,key3);
-      console.log("decryptedAES3 => "+decryptedAES3)
-
-      base64Url = beforeBase64 + ',' + decryptedAES + decryptedAES2 + decryptedAES3;
-      filename = name;
-      
-      
-      responseJSON = {
-        link:base64Url,
-        name:filename
-      }
-      responseJSON = JSON.stringify(responseJSON)
-      console.log(responseJSON);
-      res.send(responseJSON)
-      
   })
   
  
@@ -330,9 +340,10 @@ router.post('/login',function(req,res){
     if(result.length > 0){
       sess = req.session;
       sess.userid = result[0].id
-      
+      sess.name = result[0].name
       let responseJSON = {
-        response:"Verified", 
+        response:"Verified",
+        
       }
       res.send(responseJSON)
 
@@ -377,6 +388,14 @@ router.get('/retrieve',function(req,res){
        res.send(JSON.stringify(responseJSON))
     }
     
+})
+
+// Get User Name
+router.get('/getUserName', function(req,res){
+  var sql = `SELECT * FROM users WHERE id='${sess.userid}'`;
+  con.query(sql, function(err,result){
+    res.send(JSON.stringify(result));
+  })
 })
 
 

@@ -108,6 +108,7 @@ border-radius:20px;
 </style>
 <body>
     <div class="container-fluid border">
+      <h5>LoggedIn as, <span id="name"></span></h5>
       <div class="row pop " id="pop">
         <div class="col-12 " id="">
              
@@ -302,6 +303,15 @@ border-radius:20px;
     }
 
     window.onload = function(){
+       fetch('/getUserName',{
+        method:'GET'
+       }).then(function(response) {
+        return response.json();
+    }).then(function(data){
+      console.log(data)
+      document.getElementById("name").innerHTML = data[0].name
+    })
+
         fetch('/retrieve',{
           method:'GET'
         })
@@ -311,6 +321,7 @@ border-radius:20px;
       })
       .then(function(data){
         console.log(data.length)
+        
         if(data.response === "LoggedOut"){
           window.location = "first.html"
         } else if(data.length > 0) {
