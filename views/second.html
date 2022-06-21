@@ -98,8 +98,9 @@ color:#000000;
 }
 .insidepop {
     background-color: #878787;
+    overflow-y: scroll;
 
-     height:100%;
+     height:600px;
      box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 border-radius:20px;
 }
@@ -127,10 +128,30 @@ border-radius:20px;
 }
 
 </style>
+<script>
+  function keysearch(v){
+    var input, filter, table, tr, td, i, txtValue;
+  input=v;
+  filter = input.toUpperCase();
+  table = document.getElementById("NamesList");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+  }
+</script>
 <body>
     <div class="container-fluid border">
         
-  <div class="row" style="height:81px ;background-color: #4481eb;">
+  <div class="row" style="height:80px ;background-color: #4481eb;">
     <div class="col-6 ">
 
       <h4 style="color:#f1eded;font-weight:400;font-size:1.5rem">HELLO, <span id="name" style="color:#ffffff;font-size:3rem;font-weight:bold;font-family: 'Righteous', cursive;">Shankar </span></h4>
@@ -152,15 +173,15 @@ border-radius:20px;
                   </br>
 
                      <center><form>
-                       <input type="text" class="form-control" id="emailId" placeholder="Search using Full Email"></br>
-                       <button type="button" class="btn btn-info btn-lg btn-block"  onclick="submits()">Search</button>
+                       <input type="text" class="form-control" id="name" onkeyup="keysearch(this.value)" placeholder="Search using Full Email"></br>
+                       
                        <h1 id="inside"></h1>
 
                      </form></center>
-                     <table class="table text-center" >
+                     <table class="table text-center" id="mytable">
                       <thead class="table-dark"><tr>
                           
-                          <td>ID</td>
+                          <td>SL No.</td>
                           <td>Name</td>
                           <td>Email</td>
                           <td>Confirm</td>
@@ -478,27 +499,14 @@ var fsid;
       document.getElementById('pop').style.display="block";
       document.getElementById('inside').innerHTML=id;
       fsid=id;
-      }
-      function close1(){
-    document.getElementById("pop").style.display="none";
-    document.getElementById("NamesList").deleteRow(0);
-    document.getElementById("name").value=" ";
-
-    }
-
-
-    //search name to share
-function submits(){
-  var email=document.getElementById("emailId").value;
-  
-  fetch('/retrieve1', {
+      fetch('/retrieve1', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
       },
       body: JSON.stringify({
           user: {
-              emails: email,
+           
               fid:fsid
 
           }
@@ -509,9 +517,8 @@ function submits(){
   })
   .then(function(data){
     if(data.response === "done"){
-      console.log("g4g");
-
-      fetch('/retrieve2',{
+  
+    fetch('/retrieve2',{
           method:'GET'
         })
         .then(function(response) {
@@ -523,17 +530,24 @@ function submits(){
         var count=0;
         for(let i=0;i<data.length;i++){
           count++;
-          rows+='<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td>'+data[i].email+'</td><td><button type="button" class="btn btn-info btn-lg" id="'+data[i].id+'" onclick="sharing(this.id)">Access</button></td></tr>'
+          rows+='<tr><td>'+count+'</td><td>'+data[i].name+'</td><td>'+data[i].email+'</td><td><button type="button" class="btn btn-info btn-lg" id="'+data[i].id+'" onclick="sharing(this.id)">Access</button></td></tr>'
         }
         table.innerHTML = rows
       console.log(data);
       })
 
-    } else {
-      alert(data.response)
-    }
+
+    } 
   })
-}
+
+     
+      }
+      function close1(){
+    document.getElementById("pop").style.display="none";
+    document.getElementById("name").value=" ";
+
+    }
+
 function sharing(ids){
   fetch('/retrieve3', {
       method: 'POST',
@@ -552,8 +566,12 @@ function sharing(ids){
   .then(function(data){
     if(data.response === "Given Access"){
     alert("Success")
+   
     location.reload();
     } 
+    else{
+    alert("Already Inserted")
+    }
   })
    
 
@@ -582,13 +600,13 @@ function download(id){
     console.log(link);
     fileNameReceived = data.name;
     console.log(fileNameReceived)
-   //  let lastIndexOfDot = fileNameReceived.lastIndexOf('.');
-   // let getExtArr = fileNameReceived.split('.');
-   // let ext = fileNameReceived.slice(lastIndexOfDot);
+    let getExtArr = fileNameReceived.split('.');
+    let ext = getExtArr[1];
+    console.log(ext)
     var linkSource = link;
     var downloadLink = document.createElement('a');
-   // var newFileName = "Test101"
-    var fileName = fileNameReceived
+    var newFileName = "Test101"
+    var fileName = newFileName+'.'+ext
     downloadLink.href = linkSource
     downloadLink.download = fileName
     console.log(downloadLink)

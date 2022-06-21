@@ -380,30 +380,21 @@ router.get('/getUserName', function(req,res){
 router.post('/retrieve1',function(req,res){
   console.log("In Retrieve1");
 
-  emails= req.body.user.emails;
   fid=req.body.user.fid;
-  console.log(sess.email,emails);
-  if(sess.email === emails){
-    let responseJSON = {
-      response:"Share with other user!", 
-    }
-    res.send(responseJSON)
-  } else {
+  console.log(fid);
+  
     let responseJSON = {
       response:"done", 
     }
     res.send(responseJSON)
-  }
-      
-      
-
- 
+  
+    
 })
 
 //retrieve the details of a person from email
 router.get('/retrieve2',function(req,res){
   console.log("In Retrieve2");
-  var sql = `SELECT * FROM users WHERE email='${emails}'`;
+  var sql = `SELECT * FROM users where id not in ('${sess.userid}') order by name asc`;
   con.query(sql, function(err, result){
     if(err) throw err;
     res.send(JSON.stringify(result));
@@ -416,20 +407,41 @@ router.post('/retrieve3',function(req,res){
 
     cid= req.body.user.cid;
     access=1;
+  var sql1 = `SELECT * FROM share WHERE aid='${sess.userid}' and fid = '${fid}' and cid='${cid}'`;
+
+  con.query(sql1, function(err,result){
+    if(result.length > 0){
+      let responseJSON = {
+      response:"Already Inserted"
+    }
+res.send(responseJSON)
+
+    }
+
+else{
+
+
     var sql = `INSERT INTO share(aid,cid,fid,access) VALUES('${sess.userid}','${cid}','${fid}','${access}')`;
+    
+
     con.query(sql, function(err, result){
       if(err) throw err;
       let responseJSON = {
-        response:"Given Access",
+        response:"Given Access"
         
       }
-      res.send(responseJSON)
+  res.send(responseJSON)
       
   })
+
+}
+
+
+})
 })
 
 router.get('/getFilesSharedByMe', function(req,res){
-  var sql = `SELECT * FROM share WHERE aid='${sess.userid}' order by id desc`;
+  var sql = `SELECT * FROM share WHERE aid='${sess.userid}'  order by id desc`;
   con.query(sql, function(err, result){
     if(err) throw err;
     res.send(JSON.stringify(result));
