@@ -582,14 +582,13 @@ function download(id){
     console.log(link);
     fileNameReceived = data.name;
     console.log(fileNameReceived)
-    let lastIndexOfDot = fileNameReceived.lastIndexOf('.');
+   //  let lastIndexOfDot = fileNameReceived.lastIndexOf('.');
    // let getExtArr = fileNameReceived.split('.');
-    let ext = fileNameReceived.slice(lastIndexOfDot);
-    console.log(ext)
+   // let ext = fileNameReceived.slice(lastIndexOfDot);
     var linkSource = link;
     var downloadLink = document.createElement('a');
-    var newFileName = "Test101"
-    var fileName = newFileName+ext
+   // var newFileName = "Test101"
+    var fileName = fileNameReceived
     downloadLink.href = linkSource
     downloadLink.download = fileName
     console.log(downloadLink)
