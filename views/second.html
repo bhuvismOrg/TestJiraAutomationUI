@@ -599,14 +599,9 @@ function download(id){
     link = data.link;
     console.log(link);
     fileNameReceived = data.name;
-    console.log(fileNameReceived)
-    let getExtArr = fileNameReceived.split('.');
-    let ext = getExtArr[1];
-    console.log(ext)
     var linkSource = link;
     var downloadLink = document.createElement('a');
-    var newFileName = "Test101"
-    var fileName = newFileName+'.'+ext
+    var fileName = fileNameReceived
     downloadLink.href = linkSource
     downloadLink.download = fileName
     console.log(downloadLink)
