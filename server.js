@@ -410,15 +410,26 @@ router.post('/retrieve3',function(req,res){
   var sql1 = `SELECT * FROM share WHERE aid='${sess.userid}' and fid = '${fid}' and cid='${cid}'`;
 
   con.query(sql1, function(err,result){
-    if(result.length > 0){
+    if(result.length > 0 ){
+      if(result[0].access == 0){
+        var sql = `UPDATE share SET access=1 WHERE aid='${sess.userid}' and fid = '${fid}' and cid='${cid}'`;
+  con.query(sql, function(err,result){
+    if(err) throw err;
       let responseJSON = {
-      response:"Already Inserted"
+        response:"Shared"
+      }
+      res.send(responseJSON)
+  })
+      } else {
+      let responseJSON = {
+      response:"Already Shared"
     }
 res.send(responseJSON)
+  }
 
     }
 
-else{
+else {
 
 
     var sql = `INSERT INTO share(aid,cid,fid,access) VALUES('${sess.userid}','${cid}','${fid}','${access}')`;
@@ -427,7 +438,7 @@ else{
     con.query(sql, function(err, result){
       if(err) throw err;
       let responseJSON = {
-        response:"Given Access"
+        response:"Shared"
         
       }
   res.send(responseJSON)
@@ -441,7 +452,7 @@ else{
 })
 
 router.get('/getFilesSharedByMe', function(req,res){
-  var sql = `SELECT * FROM share WHERE aid='${sess.userid}'  order by id desc`;
+  var sql = `SELECT * FROM share WHERE aid='${sess.userid}' AND access=1  order by id desc`;
   con.query(sql, function(err, result){
     if(err) throw err;
     res.send(JSON.stringify(result));
@@ -472,11 +483,38 @@ router.post('/getNameAndFileName',function(req,res){
 })
 
 router.get('/getFilesSharedToMe', function(req,res){
-  var sql = `SELECT * FROM share WHERE cid='${sess.userid}' order by id desc`;
+  var sql = `SELECT * FROM share WHERE cid='${sess.userid}' and access=1 order by id desc`;
   con.query(sql, function(err, result){
     if(err) throw err;
     res.send(JSON.stringify(result));
   })
+})
+
+router.post('/retrieveAccess',function(req,res){
+  var fileId = req.body.user.fileId;
+  var clientId = req.body.user.clientId;
+  console.log(fileId,clientId);
+  var sql = `UPDATE share SET access=0 WHERE fid='${fileId}' AND cid='${clientId}'`;
+  con.query(sql,function(err,result){
+    if(err) throw err;
+    res.send(JSON.stringify("Retrieved"));
+  })
+})
+
+router.get('/checkSessionAlive', function(req,res){
+  if(sess){
+    let responseJSON = {
+      response:"SessionAlive"
+      
+    }
+res.send(responseJSON)
+  } else {
+    let responseJSON = {
+      response:"SessionNotAlive"
+      
+    }
+res.send(responseJSON)
+  }
 })
 
 app.use('/', router);

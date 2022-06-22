@@ -12,7 +12,7 @@
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Potta+One&family=Righteous&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <title>Document</title>
@@ -210,7 +210,7 @@ border-radius:20px;
                     <hr>
                 <div class="content">
                    
-                   
+                  <h3 class="text-center">Uploaded Files</h3><hr>
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
                               <td>Sl</td>
@@ -234,7 +234,7 @@ border-radius:20px;
             <div class="insidelist">
               
 
-                  <h3 class="text-center">Shared to me</h3><hr>
+                  <h3 class="text-center">Received Files</h3><hr>
                      <div class="listed">
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
@@ -260,7 +260,7 @@ border-radius:20px;
       <div class="row">
         <div class="col-12 mb-5" >
            <div class="shared">
-            <h3 class="text-center">Shared by me</h3><hr>
+            <h3 class="text-center">Sent Files</h3><hr>
             <div class="sfiles">
                <table class="table text-center" >
                    <thead class="table-dark"><tr>
@@ -359,6 +359,18 @@ border-radius:20px;
     }
 
     window.onload = function(){
+        fetch('checkSessionAlive',{
+          method:'GET'
+        }).then(function(response){
+          return response.json();
+        }).then(function(data){
+          console.log(data.response)
+          if(data.response === "SessionNotAlive"){
+            alert("Your current session has been expired! Please Login again");
+            window.location.href = "first.html"
+          }
+        })
+
        fetch('/getUserName',{
         method:'GET'
        }).then(function(response) {
@@ -386,7 +398,7 @@ border-radius:20px;
         var count=0;
         for(let i=0;i<data.length;i++){
           count++;
-          rows+='<tr><td>'+count+'</td><td>'+data[i].name+'</td><td><button type="button" onclick="share(this.id)" id="'+data[i].id+'" class="btn btn-primary btn-sm"><i class="material-icons">&#xe80d;</i></button></td></tr>'
+          rows+='<tr><td>'+count+'</td><td>'+data[i].name+'</td><td><button type="button" onclick="share(this.id)" id="'+data[i].id+'" class="btn btn-primary btn-sm"><i class="fa fa-share-alt"></i></button></td></tr>'
         }
         table.innerHTML = rows
         console.log(data)
@@ -435,7 +447,18 @@ border-radius:20px;
         filename = data[1].filename
         count++;
         let dateTime = new Date(wholeData[i].Date);
-        rows+='<tr><td>'+count+'</td><td>'+name+'</td><td>'+filename+'</td><td>'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+dateTime.getHours()+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+'</td><td>'+wholeData[i].access+'</td></tr>' 
+        let hours = dateTime.getHours();
+        let ampm = '';
+        if(hours == 12){
+          ampm = 'PM';
+        } else 
+        if(hours > 12){
+          hours = hours % 12;
+          ampm = 'PM';
+        } else {
+          ampm = 'AM'
+        }
+        rows+='<tr><td>'+count+'</td><td>'+name+'</td><td>'+filename+'</td><td>'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+hours+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+' '+ampm+'</td><td><button type="button" onclick="retrieveAccess(this.id,this.name)" name="'+wholeData[i].cid+'" id="'+wholeData[i].fid+'" class="btn btn-primary btn-sm">Retrieve</button></td></tr>' 
         table.innerHTML = rows
       })
       
@@ -484,7 +507,7 @@ border-radius:20px;
       filename = data[1].filename
       count++;
       let dateTime = new Date(wholeData[i].Date);
-      rows+='<tr><td>'+count+'</td><td>'+name+'</td><td>'+filename+'</td><td>'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+dateTime.getHours()+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+'</td><td><button type="button" onclick="download(this.id)" id="'+wholeData[i].fid+'" class="btn btn-primary btn-sm"><i class="material-icons">&#xe2c4;</i></button></td></tr>' 
+      rows+='<tr><td>'+count+'</td><td>'+name+'</td><td>'+filename+'</td><td>'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+dateTime.getHours()+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+'</td><td><button type="button" onclick="download(this.id)" id="'+wholeData[i].fid+'" class="btn btn-primary btn-sm"><i class="fa fa-download"></i></button></td></tr>' 
       table.innerHTML = rows
     })
     
@@ -564,8 +587,8 @@ function sharing(ids){
       return response.json();
   })
   .then(function(data){
-    if(data.response === "Given Access"){
-    alert("Success")
+    if(data.response){
+    alert(data.response)
    
     location.reload();
     } 
@@ -608,6 +631,26 @@ function download(id){
     downloadLink.click()
     
 })
+  }
+
+  function retrieveAccess(fileId,clientId){
+    console.log(fileId,clientId)
+    fetch('/retrieveAccess',{
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        user: {
+            fileId:fileId,
+            clientId:clientId
+        }
+    })
+    }).then(function(response) {
+      return response.json();
+  }).then(function(data){
+    location.reload();
+  })
   }
 
 
