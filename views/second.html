@@ -209,8 +209,9 @@ border-radius:20px;
                     </form>
                     <hr>
                 <div class="content">
-                   
-                  <h3 class="text-center">Uploaded Files</h3><hr>
+                  <div class="text-center">
+                   <p>Total: <span id="totalUploaded"></span></p>
+                  <h3 class="text-center">Uploaded Files</h3><hr></div>
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
                               <td>Sl</td>
@@ -232,9 +233,9 @@ border-radius:20px;
         </div>
         <div class="col-sm-12 col-md-12 col-lg-6 list ">
             <div class="insidelist">
-              
-
-                  <h3 class="text-center">Received Files</h3><hr>
+              <div class="text-center">
+                <p>Total: <span id="totalReceived"></span></p>
+               <h3 class="text-center">Received Files</h3><hr></div>
                      <div class="listed">
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
@@ -260,7 +261,9 @@ border-radius:20px;
       <div class="row">
         <div class="col-12 mb-5" >
            <div class="shared">
-            <h3 class="text-center">Sent Files</h3><hr>
+            <div class="text-center">
+              <p>Total: <span id="totalSent"></span></p>
+             <h3 class="text-center">Sent Files</h3><hr></div>
             <div class="sfiles">
                <table class="table text-center" >
                    <thead class="table-dark"><tr>
@@ -389,21 +392,25 @@ border-radius:20px;
       })
       .then(function(data){
         console.log(data.length)
-        
+        var totalCount = 0;
         if(data.response === "LoggedOut"){
           window.location = "first.html"
         } else if(data.length > 0) {
         var table = document.getElementById('filesList')
         var rows='';
         var count=0;
+        
         for(let i=0;i<data.length;i++){
           count++;
           rows+='<tr><td>'+count+'</td><td>'+data[i].name+'</td><td><button type="button" onclick="share(this.id)" id="'+data[i].id+'" class="btn btn-primary btn-sm"><i class="fa fa-share-alt"></i></button></td></tr>'
         }
         table.innerHTML = rows
+        totalCount = count;
+        document.getElementById('totalUploaded').innerHTML = totalCount
         console.log(data)
       } else {
         document.getElementById('filesList').innerHTML = "No Records Found"
+        document.getElementById('totalUploaded').innerHTML = totalCount
       }
       })
 
@@ -418,6 +425,7 @@ border-radius:20px;
       var table = document.getElementById('sharedByMe')
       var rows='';
       var count=0;
+      var totalCount = 0;
       let name;
       let filename;
       var wholeData = data
@@ -446,6 +454,8 @@ border-radius:20px;
         name = data[0].name;
         filename = data[1].filename
         count++;
+        totalCount = count;
+        document.getElementById('totalSent').innerHTML = totalCount;
         let dateTime = new Date(wholeData[i].Date);
         let hours = dateTime.getHours();
         let ampm = '';
@@ -463,6 +473,7 @@ border-radius:20px;
       })
       
       }
+      document.getElementById('totalSent').innerHTML = totalCount;
       
       console.log(data)
     })
@@ -478,6 +489,7 @@ border-radius:20px;
     var table = document.getElementById('sharedToMe')
     var rows='';
     var count=0;
+    var totalCount = 0;
     let name;
     let filename;
     var wholeData = data
@@ -506,13 +518,16 @@ border-radius:20px;
       name = data[0].name;
       filename = data[1].filename
       count++;
+      totalCount = count;
+     document.getElementById('totalReceived').innerHTML = totalCount
       let dateTime = new Date(wholeData[i].Date);
       rows+='<tr><td>'+count+'</td><td>'+name+'</td><td>'+filename+'</td><td>'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+dateTime.getHours()+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+'</td><td><button type="button" onclick="download(this.id)" id="'+wholeData[i].fid+'" class="btn btn-primary btn-sm"><i class="fa fa-download"></i></button></td></tr>' 
       table.innerHTML = rows
+      
     })
     
     }
-    
+    document.getElementById('totalReceived').innerHTML = totalCount
     console.log(data)
   })
     
