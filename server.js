@@ -19,8 +19,8 @@ const s3 = new AWS.S3({
 const fileName = uuid.v4()+'.txt';
 
 app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
-app.use(bodyParser.json());      
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({limit: '50mb'}));      
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.static(__dirname + '/views'));
 
 
@@ -240,22 +240,22 @@ router.post('/decrypt', function(req,res){
         key1 = JSON.parse(data.Body.toString()).keyAES;
         key2 = JSON.parse(data.Body.toString()).keyAES2;
         key3 = JSON.parse(data.Body.toString()).keyAES3;
-        console.log(JSON.parse(data.Body.toString()).keyAES);
+        //console.log(JSON.parse(data.Body.toString()).keyAES);
 
         let en1Buffer = Buffer.from(en1,'hex')
-        console.log(en1Buffer.length);
+       // console.log(en1Buffer.length);
         let decryptedAES = decryptAES(en1Buffer,key1);
-        console.log("decryptedAES => "+decryptedAES); 
+        //console.log("decryptedAES => "+decryptedAES); 
   
         let en2Buffer = Buffer.from(en2,'hex')
-        console.log(en2Buffer.length);
+       // console.log(en2Buffer.length);
         let decryptedAES2 = decryptAES2(en2Buffer,key2);
-        console.log("decryptedAES2 => "+decryptedAES2)
+        //console.log("decryptedAES2 => "+decryptedAES2)
   
         let en3Buffer = Buffer.from(en3,'hex')
-        console.log(en3Buffer.length);
+       // console.log(en3Buffer.length);
         let decryptedAES3 = decryptAES3(en3Buffer,key3);
-        console.log("decryptedAES3 => "+decryptedAES3)
+       // console.log("decryptedAES3 => "+decryptedAES3)
   
         base64Url = beforeBase64 + ',' + decryptedAES + decryptedAES2 + decryptedAES3;
         filename = name;
@@ -266,7 +266,7 @@ router.post('/decrypt', function(req,res){
           name:filename
         }
         responseJSON = JSON.stringify(responseJSON)
-        console.log(responseJSON);
+        //console.log(responseJSON);
         res.send(responseJSON)
       })
 
@@ -473,7 +473,7 @@ router.post('/getNameAndFileName',function(req,res){
       con.query(sql2, function(err,result){
         if(result.length > 0){
           responseJson.push({filename:result[0].name})
-          console.log(JSON.stringify(responseJson));
+       //   console.log(JSON.stringify(responseJson));
           res.send(JSON.stringify(responseJson))
       }
     })
