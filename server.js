@@ -167,17 +167,18 @@ router.post('/upload', function(req, res){
   var data2 = base64.slice(base64.length/3,2*base64.length/3);
   var data3 = base64.slice(2*base64.length/3,base64.length)
 
- // console.log("Len Data1 => "+data1);
- // console.log("Len Data2 => "+data2);
+ console.log("Len Data1 => "+data1);
+ console.log("Len Data2 => "+data2);
+ console.log("Len Data2 => "+data3);
   
   let encryptedAES = encryptAES(data1).toString('hex');
-  console.log("encryptedAES => " +encryptedAES.length);
+  console.log("encryptedAES => " +encryptedAES);
 
  let encryptedAES2 = encryptAES2(data2).toString('hex');
- console.log("encryptedAES2 => " +encryptedAES2.length);
+ console.log("encryptedAES2 => " +encryptedAES2);
 
  let encryptedAES3 = encryptAES3(data3).toString('hex');
- console.log("encryptedAES3 => " +encryptedAES3.length);
+ console.log("encryptedAES3 => " +encryptedAES3);
 
  let data = {
   keyAES:keyAES,
