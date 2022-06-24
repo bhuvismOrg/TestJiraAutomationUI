@@ -167,18 +167,18 @@ router.post('/upload', function(req, res){
   var data2 = base64.slice(base64.length/3,2*base64.length/3);
   var data3 = base64.slice(2*base64.length/3,base64.length)
 
- console.log("Len Data1 => "+data1);
- console.log("Len Data2 => "+data2);
- console.log("Len Data2 => "+data3);
+//  console.log("Len Data1 => "+data1);
+//  console.log("Len Data2 => "+data2);
+//  console.log("Len Data2 => "+data3);
   
   let encryptedAES = encryptAES(data1).toString('hex');
-  console.log("encryptedAES => " +encryptedAES);
+  console.log("encryptedAES => " +encryptedAES.length);
 
  let encryptedAES2 = encryptAES2(data2).toString('hex');
- console.log("encryptedAES2 => " +encryptedAES2);
+ console.log("encryptedAES2 => " +encryptedAES2.length);
 
  let encryptedAES3 = encryptAES3(data3).toString('hex');
- console.log("encryptedAES3 => " +encryptedAES3);
+ console.log("encryptedAES3 => " +encryptedAES3.length);
 
  let data = {
   keyAES:keyAES,
@@ -512,6 +512,23 @@ res.send(responseJSON)
     }
 res.send(responseJSON)
   }
+})
+
+router.post('/deleteFile', function(req,res){
+  console.log(req.body.user.fileId);
+  var file = req.body.user.fileId;
+  var sql = `SELECT keyAES`
+  var sql = `DELETE from info where id='${file}'`;
+  con.query(sql, function(err,result){
+    if(err) throw err;
+    sql = `DELETE from share where fid='${file}'`;
+    con.query(sql, function(err,result){
+      let responseJSON = {
+        response:"Deleted"
+      }
+      res.send(responseJSON)
+    })
+  })
 })
 
 app.use('/', router);
