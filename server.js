@@ -19,10 +19,11 @@ const s3 = new AWS.S3({
 const fileName = uuid.v4()+'.txt';
 
 app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
-app.use(bodyParser.json({limit: '50mb'}));      
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({limit: '350mb'}));      
+app.use(bodyParser.urlencoded({limit: '350mb', extended: true}));
 app.use(express.static(__dirname + '/views'));
-
+app.use(express.json());
+//app.use(cors())
 
 var sess,emails,fid;
 
@@ -33,11 +34,6 @@ var con = mysql.createConnection({
   database: "mydb"
 });
 
-
-//app.use(cors())
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-app.use(express.json());
 
 
 //path to directory where html files are stored
@@ -220,7 +216,7 @@ router.post('/decrypt', function(req,res){
     var sql = `SELECT * FROM info where id='${fileId}'`;
     con.query(sql, function(err, result){
       if(err) throw err;
-      console.log(result);
+      // console.log(result);
       let name = result[0].name;
       let beforeBase64 = result[0].beforeBase64;
       let en1 = result[0].en1;
@@ -352,7 +348,7 @@ router.get('/logout',function(req,res){
 router.get('/retrieve',function(req,res){
     console.log("In Retrieve");
     if(sess.userid){
-      var sql = `SELECT * FROM info WHERE userid='${sess.userid}' order by id desc`;
+      var sql = `SELECT id,name FROM info WHERE userid='${sess.userid}' order by id desc`;
       con.query(sql, function(err, result){
         if(err) throw err;
         res.send(JSON.stringify(result));
@@ -469,7 +465,7 @@ router.post('/getNameAndFileName',function(req,res){
       var responseJson = [{
         name:result[0].name
       }]
-      var sql2=`SELECT * FROM info WHERE id='${fileId}'`;
+      var sql2=`SELECT name FROM info WHERE id='${fileId}'`;
       con.query(sql2, function(err,result){
         if(result.length > 0){
           responseJson.push({filename:result[0].name})

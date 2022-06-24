@@ -521,7 +521,18 @@ border-radius:20px;
       totalCount = count;
      document.getElementById('totalReceived').innerHTML = totalCount
       let dateTime = new Date(wholeData[i].Date);
-      rows+='<tr><td>'+count+'</td><td>'+name+'</td><td>'+filename+'</td><td>'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+dateTime.getHours()+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+'</td><td><button type="button" onclick="download(this.id)" id="'+wholeData[i].fid+'" class="btn btn-primary btn-sm"><i class="fa fa-download"></i></button></td></tr>' 
+      let hours = dateTime.getHours();
+        let ampm = '';
+        if(hours == 12){
+          ampm = 'PM';
+        } else 
+        if(hours > 12){
+          hours = hours % 12;
+          ampm = 'PM';
+        } else {
+          ampm = 'AM'
+        }
+      rows+='<tr><td>'+count+'</td><td>'+name+'</td><td>'+filename+'</td><td>'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+hours+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+' '+ampm+'</td><td><button type="button" onclick="download(this.id)" id="'+wholeData[i].fid+'" class="btn btn-primary btn-sm"><i class="fa fa-download"></i></button></td></tr>' 
       table.innerHTML = rows
       
     })
