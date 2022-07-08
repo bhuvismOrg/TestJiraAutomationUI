@@ -13,9 +13,17 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   
+
+
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Berkshire+Swash&family=Cinzel&family=Kaushan+Script&family=Lobster&family=Potta+One&family=Righteous&family=Rock+Salt&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Lobster&family=Potta+One&family=Righteous&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Berkshire+Swash&family=Kaushan+Script&family=Lobster&family=Potta+One&family=Righteous&family=Rock+Salt&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Berkshire+Swash&family=Kaushan+Script&family=Lobster&family=Potta+One&family=Righteous&display=swap" rel="stylesheet">
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <title>Document</title>
+   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Audiowide&family=Berkshire+Swash&family=Black+Ops+One&family=Cinzel&family=Kaushan+Script&family=Lobster&family=Merienda&family=Monoton&family=Montserrat+Alternates:wght@100&family=Niramit:wght@200&family=Paytone+One&family=Potta+One&family=Righteous&family=Rock+Salt&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+ <title>Document</title>
 </head>
 <style>
     body{
@@ -30,7 +38,7 @@
     .insideadmin,.insidelist{
         border-radius:10px;
         background-color: #ffffff;
-        height:600px;
+        height: 700px;
         box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     }
     .shared{
@@ -52,14 +60,14 @@
         border-radius:10px;
         overflow-y: scroll;
         overflow-x: hidden;
-        height:430px;
+        height:390px;
         background-color: #ffffff;
     }
     .listed{
         border-radius:10px;
         overflow-y: scroll;
         overflow-x: hidden;
-        height:534px;
+        height:390px;
         background-color: #ffffff;
     }
     thead{
@@ -126,7 +134,27 @@ border-radius:20px;
 .btns:hover {
   background-color:#03317f ;
 }
-
+.heads{
+  font-size:2rem;
+  font-size:bold;
+  font-family: 'Lobster', cursive;
+font-family: 'Potta One', cursive;
+font-family: 'Righteous', cursive;
+  font-style: normal;
+ color:rgb(0, 0, 0);
+ text-transform:capitalize;
+}
+.count{
+  font-family: 'Berkshire Swash', cursive;
+}
+.table-dark{
+  font-family: 'Montserrat Alternates', sans-serif;
+  text-transform: capitalize;
+}
+tbody{
+  font-family: 'Niramit', sans-serif;
+  font-size: 1.1rem;
+}
 </style>
 <script>
   function keysearch(v){
@@ -152,13 +180,14 @@ border-radius:20px;
     <div class="container-fluid border">
         
   <div class="row" style="height:80px ;background-color: #4481eb;">
-    <div class="col-6 ">
+    <div class="col-6 mt-2">
 
-      <h4 style="color:#f1eded;font-weight:400;font-size:1.5rem">HELLO, <span id="name" style="color:#ffffff;font-size:3rem;font-weight:bold;font-family: 'Righteous', cursive;">Shankar </span></h4>
+      <h4 style="color:#f1eded;font-weight:400;font-size:1.5rem;font-family: 'Kaushan Script', cursive;">HELLO, 
+        <span id="name" style="color:#ffffff;font-size:3rem;font-weight:bold;font-family: 'Cinzel', serif;">Shankar </span></h4>
      
      </div>
     
-    <div class="col-6 mt-2">
+    <div class="col-6 mt-3">
           <span style="float:right;">
             <button type="submit"  class="btns solid" onclick="logout()">logout</button>
           </span>
@@ -187,7 +216,7 @@ border-radius:20px;
                           <td>Confirm</td>
                       </tr>
                      </thead>
-                      <tbody id="NamesList">
+                      <tbody id="NamesList" style="color:#ffffff"> 
                             
                       </tbody>
                    
@@ -200,19 +229,21 @@ border-radius:20px;
       </div>
     >
       <div class="row mt-5">
-        <div class="col-sm-12 col-md-12 col-lg-6 admin">
+        <div class="col-sm-12 col-md-12 col-lg-6 admin " style="height:700px">
             <div class="insideadmin">
-                <h3 class="text-center">Upload Files</h3>
+                <h3 class="text-center heads" >Upload Files</h3>
                
                     <form enctype="multipart/form-data" class="forms">
                       <input type="file" name="mypic" id="myfile" required class="form-control"><br>
-                      <button type="button"  id="uploadBtn" class="btn btn-primary btn-sm">Upload</button>
+                      <center><button type="button"  id="uploadBtn" class="btn btn-primary btn-sm" style="text-transform: uppercase;">Upload</button></center>
                     </form>
                     <hr>
+                    <div class="text-center">
+                      <p class="count">Total: <span id="totalUploaded"></span></p>
+                     <h3 class="text-center heads">Uploaded Files</h3><hr></div>
+                     <hr>
                 <div class="content">
-                  <div class="text-center">
-                   <p>Total: <span id="totalUploaded"></span></p>
-                  <h3 class="text-center">Uploaded Files</h3><hr></div>
+          
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
                               <td>Sl</td>
@@ -233,11 +264,11 @@ border-radius:20px;
             </div>
             
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 list ">
+        <div class="col-sm-12 col-md-12 col-lg-6 list" style="height:700px">
             <div class="insidelist">
               <div class="text-center">
-                <p>Total: <span id="totalReceived"></span></p>
-               <h3 class="text-center">Received Files</h3><hr></div>
+                <p class="count">Total: <span id="totalReceived"></span></p>
+               <h3 class="text-center heads">Received Files</h3><hr></div>
                      <div class="listed">
                         <table class="table text-center" >
                             <thead class="table-dark"><tr>
@@ -261,11 +292,11 @@ border-radius:20px;
         </div>
       </div>
       <div class="row">
-        <div class="col-12 mb-5" >
+        <div class="col-12  mt-5" >
            <div class="shared">
             <div class="text-center">
-              <p>Total: <span id="totalSent"></span></p>
-             <h3 class="text-center">Sent Files</h3><hr></div>
+              <p class="count">Total: <span id="totalSent"></span></p>
+             <h3 class="text-center heads">Sent Files</h3><hr></div>
             <div class="sfiles">
                <table class="table text-center" >
                    <thead class="table-dark"><tr>
@@ -367,6 +398,7 @@ border-radius:20px;
             })
           };
         reader.readAsDataURL(file);
+        //come here first
     });
 
     function logout(){
@@ -570,7 +602,7 @@ border-radius:20px;
 var fsid;
     function share(id){
       document.getElementById('pop').style.display="block";
-      document.getElementById('inside').innerHTML=id;
+      //document.getElementById('inside').innerHTML=id;
       fsid=id;
       fetch('/retrieve1', {
       method: 'POST',
@@ -598,14 +630,15 @@ var fsid;
           return response.json();
       })
       .then(function(data){
-        var table = document.getElementById('NamesList')
+        var table = document.getElementById('NamesList');
+
         var rows='';
         var count=0;
         for(let i=0;i<data.length;i++){
           count++;
           rows+='<tr><td>'+count+'</td><td>'+data[i].name+'</td><td>'+data[i].email+'</td><td><button type="button" class="btn btn-info btn-lg" id="'+data[i].id+'" onclick="sharing(this.id)">Access</button></td></tr>'
         }
-        table.innerHTML = rows
+        table.innerHTML = rows;
       console.log(data);
       })
 
