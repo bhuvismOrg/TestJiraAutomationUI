@@ -198,6 +198,7 @@ border-radius:20px;
 
         </div>
       </div>
+    >
       <div class="row mt-5">
         <div class="col-sm-12 col-md-12 col-lg-6 admin">
             <div class="insideadmin">
@@ -674,7 +675,7 @@ function download(id){
     var linkSource = link;
     var downloadLink = document.createElement('a');
     var fileName = fileNameReceived
-    downloadLink.href = linkSource
+    downloadLink.href = linkSource 
     downloadLink.download = fileName
     console.log(downloadLink)
     downloadLink.click()
@@ -720,6 +721,7 @@ function download(id){
     location.reload();
   })
   }
+
 
 
 
