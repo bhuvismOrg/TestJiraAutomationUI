@@ -30,7 +30,7 @@ var sess,emails,fid;
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
+  password: "peer-connect_mysql",
   database: "mydb"
 });
 
@@ -211,6 +211,7 @@ con.query(sql, function(err, result){
 router.post('/decrypt', function(req,res){
   var fileId = req.body.user.fid
   var base64Url = '';
+  let afterBase64 = '';
   var filename;
   var responseJSON;
   
@@ -255,11 +256,13 @@ router.post('/decrypt', function(req,res){
        // console.log("decryptedAES3 => "+decryptedAES3)
   
         base64Url = beforeBase64 + ',' + decryptedAES + decryptedAES2 + decryptedAES3;
+        afterBase64 = decryptedAES + decryptedAES2 + decryptedAES3;
         filename = name;
         
         
         responseJSON = {
-          link:base64Url,
+          beforeBase64:beforeBase64,
+          afterBase64:afterBase64,
           name:filename
         }
         responseJSON = JSON.stringify(responseJSON)

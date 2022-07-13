@@ -702,16 +702,22 @@ function download(id){
     return response.json();
 })
 .then(function(data) {
-    link = data.link;
-    console.log(link);
+   let beforeBase64 = data.beforeBase64;
+   let afterBase64 = data.afterBase64
+    //console.log(link);
     fileNameReceived = data.name;
-    var linkSource = link;
+    let pdfWindow = window.open("")
+    pdfWindow.document.write(
+    "<iframe width='100%' height='100%' src='data:application/pdf;base64, " +
+    encodeURI(afterBase64) + "'></iframe>"
+)
+    /* var linkSource = link;
     var downloadLink = document.createElement('a');
     var fileName = fileNameReceived
     downloadLink.href = linkSource 
     downloadLink.download = fileName
     console.log(downloadLink)
-    downloadLink.click()
+    downloadLink.click() */
     
 })
   }
