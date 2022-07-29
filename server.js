@@ -28,7 +28,7 @@ app.use(express.json());
 var sess,emails,fid;
 
 var con = mysql.createConnection({
-  host: "localhost",
+  host: "localhost:3306",
   user: "root",
   password: "peer-connect_mysql",
   database: "mydb"
