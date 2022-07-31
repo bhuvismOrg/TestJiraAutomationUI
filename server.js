@@ -28,10 +28,10 @@ app.use(express.json());
 var sess,emails,fid;
 
 var con = mysql.createConnection({
-  host: "localhost:3306",
-  user: "root",
-  password: "peer-connect_mysql",
-  database: "mydb"
+  host: "b5lf3jlsbamw0k8ok7yy-mysql.services.clever-cloud.com",
+  user: "u7ujwcpa4pfnnhpt",
+  password: "1xaaXrFHkFeztDnrh2Fx",
+  database: "b5lf3jlsbamw0k8ok7yy"
 });
 
 

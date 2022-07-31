@@ -250,6 +250,7 @@ tbody{
                               <td>Name</td>
                               <td>share</td>
                               <td>Delete</td>
+                              <td>Download</td>
                             </tr>
                            </thead>
                             <tbody id="filesList">
@@ -458,7 +459,7 @@ tbody{
         
         for(let i=0;i<data.length;i++){
           count++;
-          rows+='<tr><td>'+count+'</td><td>'+data[i].name+'</td><td><button type="button" onclick="share(this.id)" id="'+data[i].id+'" class="btn btn-primary btn-sm"><i class="fa fa-share-alt"></i></button></td><td><button type="button"  id="'+data[i].id+'" onclick="deleteFile(this.id)" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></button></td></tr>'
+          rows+='<tr><td>'+count+'</td><td>'+data[i].name+'</td><td><button type="button" onclick="share(this.id)" id="'+data[i].id+'" class="btn btn-primary btn-sm"><i class="fa fa-share-alt"></i></button></td><td><button type="button"  id="'+data[i].id+'" onclick="deleteFile(this.id)" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></button></td><td><button type="button" onclick="download(this.id)" id="'+data[i].id+'" class="btn btn-primary btn-sm"><i class="fa fa-download"></i></button></td></tr>'
         }
         table.innerHTML = rows
         totalCount = count;
@@ -704,20 +705,18 @@ function download(id){
 .then(function(data) {
    let beforeBase64 = data.beforeBase64;
    let afterBase64 = data.afterBase64
+   console.log(beforeBase64+','+afterBase64)
+   link = beforeBase64+','+afterBase64;
     //console.log(link);
     fileNameReceived = data.name;
-    let pdfWindow = window.open("")
-    pdfWindow.document.write(
-    "<iframe width='100%' height='100%' src='data:application/pdf;base64, " +
-    encodeURI(afterBase64) + "'></iframe>"
-)
-    /* var linkSource = link;
+  
+     var linkSource = link;
     var downloadLink = document.createElement('a');
     var fileName = fileNameReceived
     downloadLink.href = linkSource 
     downloadLink.download = fileName
     console.log(downloadLink)
-    downloadLink.click() */
+    downloadLink.click() 
     
 })
   }
