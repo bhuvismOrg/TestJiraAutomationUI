@@ -2,7 +2,7 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions from Jira 🚀
 on:
   repository_dispatch:
-    types: [test_result]
+    types: [test_jira_automation]
 
 jobs:
   run_if_failure:
