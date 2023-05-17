@@ -16,4 +16,4 @@ jobs:
         uses: repo-sync/pull-request-merge@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pull_request_number: ${{ github.event.pull_request.number }}
+          pull_request_number: #11
