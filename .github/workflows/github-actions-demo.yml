@@ -10,5 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - env:
-          MESSAGE: ${{ github.event.client_payload.message }}
+          MESSAGE: ${{ github.event.client_payload.prurl }}
         run: echo $MESSAGE
