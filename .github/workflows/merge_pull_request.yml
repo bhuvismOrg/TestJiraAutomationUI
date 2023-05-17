@@ -1,9 +1,8 @@
 name: Merge Pull Request
 
 on:
-  pull_request:
-    types:
-      - labeled
+  repository_dispatch:
+    types: [test_jira_automation]
       
 jobs:
   merge:
