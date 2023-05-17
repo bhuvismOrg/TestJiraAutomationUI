@@ -20,6 +20,6 @@ jobs:
             await github.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
+              pull_number: '#11',
               merge_method: 'merge'
             });
