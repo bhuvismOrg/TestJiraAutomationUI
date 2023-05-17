@@ -17,15 +17,17 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const { owner, repo, number } = context.issue;
+
             const { data: pullRequest } = await github.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: '#11'
+              owner,
+              repo,
+              pull_number: 11
             });
 
             await github.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
+              owner,
+              repo,
+              pull_number: number,
               merge_method: 'merge'
             });
