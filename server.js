@@ -18,7 +18,7 @@ const s3 = new AWS.S3({
 
 const fileName = uuid.v4()+'.txt';
 
-app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
+app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: false}));
 app.use(bodyParser.json({limit: '350mb'}));      
 app.use(bodyParser.urlencoded({limit: '350mb', extended: true}));
 app.use(express.static(__dirname + '/views'));
