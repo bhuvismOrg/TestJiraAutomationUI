@@ -1,9 +1,10 @@
-name: Merge Pull Request
+name: Merge PR
 
 on:
-  repository_dispatch:
-    types: [test_jira_automation]
-      
+  pull_request:
+    types:
+      - closed
+
 jobs:
   merge:
     runs-on: ubuntu-latest
@@ -12,20 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Merge Pull Request
-        uses: actions/github-script@v5
+      - name: Merge PR
+        uses: peter-evans/merge-pull-request-action@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { data: pullRequest } = await github.pulls.get({
-              owner: 'bhuvism',
-              repo: 'bhuvism',
-              pull_number: 11
-            });
-
-            await github.pulls.merge({
-              owner: 'bhuvism',
-              repo: 'bhuvism',
-              pull_number: 11,
-              merge_method: 'merge'
-            });
+          github_token: ${{ secrets.GITHUB_TOKEN }}
