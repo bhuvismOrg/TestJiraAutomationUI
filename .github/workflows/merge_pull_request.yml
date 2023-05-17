@@ -14,12 +14,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Merge PR
-        uses: github-script@v5
+        uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = context.payload.pull_request.number;
-            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+            const octokit = context.octokit;
             octokit.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
