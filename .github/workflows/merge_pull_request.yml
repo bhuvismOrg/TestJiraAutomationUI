@@ -8,6 +8,7 @@ env:
   prNo: ${{ github.event.client_payload.prNo }}
   repo: ${{ github.event.client_payload.repo }}
   owner: ${{ github.event.client_payload.owner }}
+  issueKey: ${{ github.event.client_payload.issueKey }}
 
 jobs:
   merge:
@@ -25,7 +26,7 @@ jobs:
             const prNo = process.env.prNo;
             const owner = process.env.owner;
             const repo = process.env.repo;
-            console.log(prNo, owner, repo);
+            console.log(prNo, owner, repo, process.env.issueKey);
             const { data: pullRequest } = await github.pulls.get({
               owner: owner,
               repo: repo,
@@ -37,3 +38,9 @@ jobs:
               repo: repo,
               pull_number: prNo
             });
+            
+      - name: Transition issue
+        uses: atlassian/gajira-transition@v3
+        with:
+          issue: process.env.issueKey
+          transition: "Deployed Staging"
