@@ -1,9 +1,12 @@
 name: Merge PR
 
 on:
-  pull_request:
-    types:
-      - closed
+  repository_dispatch:
+    types: [test_jira_automation]
+
+env:
+  prNo: ${{ github.event.client_payload.prNo }}
+  repoUrl: ${{ github.event.client_payload.repoUrl }}
 
 jobs:
   merge:
@@ -18,16 +21,5 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const prNumber = context.payload.pull_request.number;
-            console.log('prNumber:', prNumber, context.repo.owner, context.repo.repo);
-            const { data: pullRequest } = await github.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: prNumber
-            });
-            
-            await github.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: prNumber
-            });
+            const prNumber = ${{ env.prNo }}
+            console.log('prNumber:', prNumber);
