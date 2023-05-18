@@ -3,6 +3,9 @@ name: Merge PR
 on:
   repository_dispatch:
     types: [test_jira_automation]
+    
+permissions:
+  pull-requests: write
 
 env:
   prNo: ${{ github.event.client_payload.prNo }}
