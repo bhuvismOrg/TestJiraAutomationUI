@@ -49,5 +49,5 @@ jobs:
       - name: Transition issue
         uses: atlassian/gajira-transition@v3
         with:
-          issue: process.env.issueKey
+          issue: ${{process.env.issueKey}}
           transition: "Deployed Staging"
