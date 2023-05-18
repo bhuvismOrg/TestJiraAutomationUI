@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Log
-        run: echo ${{context.payload.pull_request.number}}
-        
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -22,6 +19,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = context.payload.pull_request.number;
+            console.log('prNumber:', prNumber);
             const { data: pullRequest } = await github.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
