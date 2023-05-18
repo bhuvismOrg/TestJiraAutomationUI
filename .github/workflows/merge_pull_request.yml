@@ -24,4 +24,8 @@ jobs:
             const prNumber = process.env.prNo;
             console.log('prNumber:', prNumber.split('#')[1].split(']')[0], typeof prNumber, prNumber.length);
             const repoUrl = process.env.repoUrl;
-            console.log('repoUrl:', repoUrl, typeof repoUrl, repoUrl.length);
+            console.log('repoUrl:', repoUrl.split(',')[0].split('/')[0].split('[')[1], typeof repoUrl, repoUrl.length);
+            const prNo = prNumber.split('#')[1].split(']')[0];
+            const owner = repoUrl.split(',')[0].split('/')[0].split('[')[1];
+            const repo = repoUrl.split(',')[0].split('/')[1];
+            console.log(prNo, owner, repo);
