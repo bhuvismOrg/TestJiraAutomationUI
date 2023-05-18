@@ -22,4 +22,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = process.env.prNo;
-            console.log('prNumber:', prNumber);
+            console.log('prNumber:', prNumber, typeof prNo, prNo.length);
+            const repoUrl = process.env.repoUrl;
+            console.log('repoUrl:', repoUrl);
