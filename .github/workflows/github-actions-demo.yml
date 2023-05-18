@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - env:
-          prNo: ${{ github.event.client_payload.prNo }}
+          prNo: ${{ github.event.client_payload.prNo[0] }}
         run: echo $prNo
       - env:
-          repoUrl: ${{ github.event.client_payload.repoUrl }}
+          repoUrl: ${{ github.event.client_payload.repoUrl[0] }}
         run: echo $repoUrl
