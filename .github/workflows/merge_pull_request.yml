@@ -32,11 +32,11 @@ jobs:
             const { data: pullRequest } = await github.pulls.get({
               owner: owner,
               repo: repo,
-              pull_number: prNo
+              pull_number: 22
             });
             
             await github.pulls.merge({
               owner: owner,
               repo: repo,
-              pull_number: prNo
+              pull_number: 22
             });
