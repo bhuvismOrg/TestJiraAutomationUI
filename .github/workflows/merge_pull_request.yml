@@ -20,8 +20,6 @@ jobs:
       - name: Merge PR
         uses: actions/github-script@v4
         with:
-          route: PUT /repos/process.env.owner/process.env.repo/pulls/process.env.prNo/merge
-          permissions: repo
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNo = process.env.prNo;
