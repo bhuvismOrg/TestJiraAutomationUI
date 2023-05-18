@@ -42,9 +42,9 @@ jobs:
       - name: Login
         uses: atlassian/gajira-login@v3
         env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_BASE_URL: 'https://bhuvsimown.atlassian.net/'
+          JIRA_USER_EMAIL: 'bhuvanbhuvism@gmail.com'
+          JIRA_API_TOKEN: 'ATATT3xFfGF0_9tOSaKWdKqXdZM5KdnXDMNEyCeUHcFyemXWii-yUNeLjzs-3hFDJDFyFsUCv5X4_4VWHngPrHIudDGjUbllucpsakV45eH1KDNHWbdK_hjYmzKyYa5snVKvKCeYBXw4eb9JXAyJDY5NVEl_ichFrH08fDTiISV5YD7vXIu_MRs=05D576C6'
             
       - name: Transition issue
         uses: atlassian/gajira-transition@v3
