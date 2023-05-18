@@ -6,7 +6,8 @@ on:
 
 env:
   prNo: ${{ github.event.client_payload.prNo }}
-  repoUrl: ${{ github.event.client_payload.repoUrl }}
+  repo: ${{ github.event.client_payload.repo }}
+  owner: ${{ github.event.client_payload.owner }}
 
 jobs:
   merge:
@@ -21,13 +22,9 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const prNumber = process.env.prNo;
-            console.log('env vars before modi:', process.env.prNo, process.env.repoUrl);
-            const repoUrl = process.env.repoUrl;
-            console.log('repoUrl:', repoUrl.split(',')[0].split('/')[0].split('[')[1], typeof repoUrl, repoUrl.length);
-            const prNo = prNumber.split('#')[1].split(']')[0];
-            const owner = repoUrl.split(',')[0].split('/')[0].split('[')[1];
-            const repo = repoUrl.split(',')[0].split('/')[1].split(']')[0];
+            const prNo = process.env.prNo;
+            const owner = process.env.owner;
+            const repo = process.env.repo;
             console.log(prNo, owner, repo);
             const { data: pullRequest } = await github.pulls.get({
               owner: owner,
