@@ -8,6 +8,7 @@ env:
   prNo: ${{ github.event.client_payload.prNo }}
   repo: ${{ github.event.client_payload.repo }}
   owner: ${{ github.event.client_payload.owner }}
+  response: ${{ github.event.client_payload.response }}
 
 jobs:
   merge:
@@ -25,7 +26,7 @@ jobs:
             const prNo = process.env.prNo;
             const owner = process.env.owner;
             const repo = process.env.repo;
-            console.log(prNo, owner, repo);
+            console.log(prNo, owner, repo, process.env.response);
             const { data: pullRequest } = await github.pulls.get({
               owner: owner,
               repo: repo,
