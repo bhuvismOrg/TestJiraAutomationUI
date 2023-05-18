@@ -22,7 +22,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = process.env.prNo;
-            console.log('prNumber:', prNumber.split('#')[1].split(']')[0], typeof prNumber, prNumber.length);
+            console.log('env vars before modi:', process.env.prNo, process.env.repoUrl);
             const repoUrl = process.env.repoUrl;
             console.log('repoUrl:', repoUrl.split(',')[0].split('/')[0].split('[')[1], typeof repoUrl, repoUrl.length);
             const prNo = prNumber.split('#')[1].split(']')[0];
