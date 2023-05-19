@@ -30,5 +30,5 @@ jobs:
           git fetch
           git checkout master
           git pull origin master
-          git cherry-pick 'c8b382d8932a446cdf31f095e3b8af1415e8ca81'
+          git cherry-pick ${{ env.merge_commit_sha }}
           git push origin master
