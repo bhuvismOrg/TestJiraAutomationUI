@@ -29,5 +29,5 @@ jobs:
           git config user.email "bhuvanbhuvism@gmail.com"
           git fetch
           git checkout master
-          git cherry-pick ${{ env.merge_commit_sha }}
+          git cherry-pick c8b382d8932a446cdf31f095e3b8af1415e8ca81
           git push origin master
