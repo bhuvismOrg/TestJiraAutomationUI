@@ -1,0 +1,34 @@
+name: Cherry pick to master
+
+on:
+  repository_dispatch:
+    types: [After_QA]
+
+env:
+  merge_commit_sha: ${{ github.event.client_payload.merge_commit_sha }}
+
+jobs:
+  cherry_pick:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: uat
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Cherry pick commit
+        run: |
+          git config user.name "bhuvismOrg"
+          git config user.email "bhuvanbhuvism@gmail.com"
+          git fetch
+          git checkout master
+          git pull origin master
+          git cherry-pick c8b382d8932a446cdf31f095e3b8af1415e8ca81
+          git push origin master
