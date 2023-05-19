@@ -1,0 +1,22 @@
+name: Cherry pick to master
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cherry_pick:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Cherry pick commit
+        run: |
+          git config user.name "Your Name"
+          git config user.email "your-email@example.com"
+          git checkout master
+          git cherry-pick <commit-sha>
+          git push origin master
