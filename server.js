@@ -1,4 +1,4 @@
-//Create node server and listen on port 3000
+//Create node server and listen on port 500
 var express = require('express');
 var crypto = require('crypto')
 var cors = require('cors')
