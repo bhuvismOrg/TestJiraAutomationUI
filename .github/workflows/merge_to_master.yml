@@ -1,0 +1,24 @@
+name: Cherry pick to master
+
+on:
+  repository_dispatch:
+    types: [After_QA]
+
+env:
+  merge_commit_sha: ${{ github.event.client_payload.merge_commit_sha }}
+
+jobs:
+  cherry_pick:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Cherry pick commit
+        run: |
+          git config user.name "bhuvismOrg"
+          git config user.email "bhuvanbhuvism@gmail.com"
+          git checkout master
+          git cherry-pick ${{ process.env.merge_commit_sha }}
+          git push origin master
