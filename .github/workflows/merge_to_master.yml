@@ -8,7 +8,6 @@ env:
   prNo: ${{ github.event.client_payload.prNo }}
   repo: ${{ github.event.client_payload.repo }}
   owner: ${{ github.event.client_payload.owner }}
-  issueKey: ${{ github.event.client_payload.issueKey }}
 
 jobs:
   merge:
