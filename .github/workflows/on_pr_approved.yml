@@ -26,8 +26,8 @@ jobs:
           echo "Second Part: ${SPLIT_ARRAY[1]}"
           echo "Third Part: ${SPLIT_ARRAY[2]}"
           FIRST_PART=$(echo "$BRANCH_NAME" | awk -F- '{print $2}')
-          SECOND_PART=$(echo "$BRANCH_NAME" | cut -d',' -f2-)
-          echo "First Part: $SECOND_PART"
+          SECOND_PART=$(echo "$BRANCH_NAME" | cut -d'-' -f2-)
+          echo "Second Part: $SECOND_PART"
         
       - name: Update Jira Custom Field
         env:
