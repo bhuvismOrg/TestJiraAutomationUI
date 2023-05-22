@@ -26,13 +26,15 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_BASIC_API_TOKEN: ${{ secrets.JIRA_BASIC_API_TOKEN  }}
-        run: |
-          curl --location --request PUT 'https://$JIRA_BASE_URL/rest/api/2/issue/JGI-11' \
-          --header 'Content-Type: application/json' \
-          --header 'Authorization: Basic $JIRA_BASIC_API_TOKEN' \
-          --data '{
-              "fields": {
-                  "customfield_10038": "True"
-              }
-          }'
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const response2 = await github.request('PUT https://bhuvsimown.atlassian.net/rest/api/2/issue/JGI-11', {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Ymh1dmFuYmh1dmlzbUBnbWFpbC5jb206QVRBVFQzeEZmR0YwXzl0T1NhS1dkS3FYZFpNNUtkblhETU5FeUNlVUhjRnllbVhXaWkteVVOZUxqenMtM2hGREpERnlGc1VDdjVYNF80VldIbmdQckhJdWRER2pVYmxsdWNwc2FrVjQ1ZUgxS0ROSFdiZEtfaGpZbXpLeVlhNXNuVkt2S0NlWUJYdzRlYjlKWEF5SkRZNU5WRWxfaWNoRnJIMDhmRFRpSVNWNVlEN3ZYSXVfTVJzPTA1RDU3NkM2'
+              },
+              body: JSON.stringify({ "fields": {"customfield_10038": "True"} })
+            });
+            console.log(response2.data);
 
