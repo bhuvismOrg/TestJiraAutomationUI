@@ -13,6 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         
+      - name: Retrieve Branch Name
+        id: branch-name
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          BRANCH_NAME=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
+            | jq -r '.head.ref')
+          echo "Branch Name: $BRANCH_NAME"
+        
       - name: Update Jira Custom Field
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
