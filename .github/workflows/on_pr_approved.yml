@@ -1,9 +1,9 @@
 name: Update Jira Custom Field
 
 on:
-  issue_comment:
+  pull_request_review:
     types:
-      - created
+      - submitted
     
 jobs:
   update-jira:
