@@ -24,14 +24,19 @@ jobs:
           JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const response2 = await github.request('PUT https://bhuvsimown.atlassian.net/rest/api/2/issue/JGI-11', {
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Ymh1dmFuYmh1dmlzbUBnbWFpbC5jb206QVRBVFQzeEZmR0YwXzl0T1NhS1dkS3FYZFpNNUtkblhETU5FeUNlVUhjRnllbVhXaWkteVVOZUxqenMtM2hGREpERnlGc1VDdjVYNF80VldIbmdQckhJdWRER2pVYmxsdWNwc2FrVjQ1ZUgxS0ROSFdiZEtfaGpZbXpLeVlhNXNuVkt2S0NlWUJYdzRlYjlKWEF5SkRZNU5WRWxfaWNoRnJIMDhmRFRpSVNWNVlEN3ZYSXVfTVJzPTA1RDU3NkM2'
-              },
-              body: { "fields": {"customfield_10038": "True"} }
-            });
-            console.log(response2.data);
+        run: |
+          ISSUE_KEY="JGI-11"  # Replace with the Jira issue key
+          API_ENDPOINT="/rest/api/2/issue/$ISSUE_KEY"  # Replace with the desired Jira API endpoint
+
+          # Define your request body JSON
+          REQUEST_BODY='{
+            "fields": {
+              "customfield_10038": "True"
+            }
+          }'
+
+          # Make the API call to Jira
+          curl -D- -u $JIRA_API_TOKEN:x -X PUT \
+            -H "Content-Type: application/json" \
+            -d "$REQUEST_BODY" \
+            $JIRA_BASE_URL$API_ENDPOINT
