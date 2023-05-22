@@ -1,33 +1,39 @@
-name: Cherry pick to master
+name: Merge PR to master
 
 on:
   repository_dispatch:
     types: [After_QA]
 
 env:
-  merge_commit_sha: ${{ github.event.client_payload.merge_commit_sha }}
+  prNo: ${{ github.event.client_payload.prNo }}
+  repo: ${{ github.event.client_payload.repo }}
+  owner: ${{ github.event.client_payload.owner }}
 
 jobs:
-  cherry_pick:
+  merge:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          ref: uat
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Merge PR to master
+        uses: actions/github-script@v4
         with:
-          node-version: '16'
-
-      - name: Cherry pick commit
-        run: |
-          git config user.name "bhuvismOrg"
-          git config user.email "bhuvanbhuvism@gmail.com"
-          git fetch
-          git checkout master
-          git cherry-pick ${{ env.merge_commit_sha }}
-          git push origin master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNo = process.env.prNo;
+            const owner = process.env.owner;
+            const repo = process.env.repo;
+            console.log(prNo, owner, repo);
+            const { data: pullRequest } = await github.pulls.get({
+              owner: owner,
+              repo: repo,
+              pull_number: prNo
+            });
+            
+            await github.pulls.merge({
+              owner: owner,
+              repo: repo,
+              pull_number: prNo
+            });
