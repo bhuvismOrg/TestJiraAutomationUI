@@ -22,13 +22,14 @@ jobs:
           echo "Branch Name: $BRANCH_NAME"
           SECOND_PART=$(echo "$BRANCH_NAME" | cut -d'-' -f2-)
           echo "Second Part: $SECOND_PART"
+          echo "::set-output name=second-part::$SECOND_PART"
         
       - name: Update Jira Custom Field
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_BASIC_API_TOKEN }}
         run: |
-          ISSUE_KEY=echo "${{ steps.split-branch-name.outputs.SECOND_PART }}"  # Replace with the Jira issue key
+          ISSUE_KEY=echo "${{ steps.split-branch-name.outputs.second-part }}"  # Replace with the Jira issue key
           API_ENDPOINT="/rest/api/2/issue/$ISSUE_KEY"  # Replace with the desired Jira API endpoint
 
           REQUEST_BODY='{
