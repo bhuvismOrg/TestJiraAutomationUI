@@ -2,7 +2,7 @@ name: Update Jira Custom Field
 
 on:
   pull_request:
-    types: [review_requested, approved]
+    types: [approved]
     
 jobs:
   update-jira:
