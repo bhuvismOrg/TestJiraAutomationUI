@@ -1,0 +1,40 @@
+name: Merge PR to master
+
+on:
+  repository_dispatch:
+    types: [After_QA]
+
+env:
+  prNo: ${{ github.event.client_payload.prNo }}
+  repo: ${{ github.event.client_payload.repo }}
+  owner: ${{ github.event.client_payload.owner }}
+  issueKey: ${{ github.event.client_payload.issueKey }}
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge PR to master
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNo = process.env.prNo;
+            const owner = process.env.owner;
+            const repo = process.env.repo;
+            console.log(prNo, owner, repo, process.env.issueKey);
+            const { data: pullRequest } = await github.pulls.get({
+              owner: owner,
+              repo: repo,
+              pull_number: prNo
+            });
+            
+            await github.pulls.merge({
+              owner: owner,
+              repo: repo,
+              pull_number: prNo
+            });
