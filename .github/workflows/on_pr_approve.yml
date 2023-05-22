@@ -17,6 +17,7 @@ jobs:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_BASIC_API_TOKEN }}
         run: |
+          echo "PR Body: ${{ github.event.pull_request.body }}"
           ISSUE_KEY="JGI-11"  # Replace with the Jira issue key
           API_ENDPOINT="/rest/api/2/issue/$ISSUE_KEY"  # Replace with the desired Jira API endpoint
 
