@@ -21,6 +21,10 @@ jobs:
             "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
             | jq -r '.head.ref')
           echo "Branch Name: $BRANCH_NAME"
+          IFS='-' read -ra SPLIT_ARRAY <<< "$BRANCH_NAME"
+          echo "First Part: ${SPLIT_ARRAY[0]}"
+          echo "Second Part: ${SPLIT_ARRAY[1]}"
+          echo "Third Part: ${SPLIT_ARRAY[2]}"
         
       - name: Update Jira Custom Field
         env:
