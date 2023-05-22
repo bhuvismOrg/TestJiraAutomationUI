@@ -2,8 +2,8 @@ var express = require('express')
 var fs = require('fs')
 var app = express()
 
-var port = 3000
-var xyz = 30000
+var port = 1000
+var xyz = 10000
 
 
 fs.appendFile("./uploads/b.txt", "bande", (err,data) => {
