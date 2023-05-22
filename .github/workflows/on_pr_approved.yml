@@ -25,6 +25,9 @@ jobs:
           echo "First Part: ${SPLIT_ARRAY[0]}"
           echo "Second Part: ${SPLIT_ARRAY[1]}"
           echo "Third Part: ${SPLIT_ARRAY[2]}"
+          FIRST_PART=$(echo "$BRANCH_NAME" | awk -F, '{print $1}')
+          echo "First Part: $FIRST_PART"
+          ISSUE_KEY = "${SPLIT_ARRAY[0]}${{ env.STRING2 }}"
         
       - name: Update Jira Custom Field
         env:
