@@ -28,7 +28,8 @@ jobs:
           }'
 
           # Make the API call to Jira
-          curl -D- -u $JIRA_API_TOKEN:x -X PUT \
+          curl -X PUT \
             -H "Content-Type: application/json" \
+            -H "Authorization: Basic Ymh1dmFuYmh1dmlzbUBnbWFpbC5jb206QVRBVFQzeEZmR0YwXzl0T1NhS1dkS3FYZFpNNUtkblhETU5FeUNlVUhjRnllbVhXaWkteVVOZUxqenMtM2hGREpERnlGc1VDdjVYNF80VldIbmdQckhJdWRER2pVYmxsdWNwc2FrVjQ1ZUgxS0ROSFdiZEtfaGpZbXpLeVlhNXNuVkt2S0NlWUJYdzRlYjlKWEF5SkRZNU5WRWxfaWNoRnJIMDhmRFRpSVNWNVlEN3ZYSXVfTVJzPTA1RDU3NkM2"
             -d "$REQUEST_BODY" \
             $JIRA_BASE_URL$API_ENDPOINT
