@@ -32,3 +32,4 @@ jobs:
           curl --location --request PUT $JIRA_BASE_URL$API_ENDPOINT \
             -H "Content-Type: application/json" \
             -H "Authorization: Basic $JIRA_API_TOKEN" \
+            -d "$REQUEST_BODY"
