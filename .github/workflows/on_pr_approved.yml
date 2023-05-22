@@ -17,7 +17,7 @@ jobs:
           JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-      run: |
+        run: |
           ISSUE_KEY="JGI-11" # Replace with the Jira issue key you want to update
           CUSTOM_FIELD_ID="isPRApproved" # Replace with the ID of the custom field you want to update
           CUSTOM_FIELD_VALUE="True" # Replace with the new value you want to set
