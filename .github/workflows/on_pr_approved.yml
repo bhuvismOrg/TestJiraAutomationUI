@@ -22,7 +22,7 @@ jobs:
           SECOND_PART=$(echo "$BRANCH_NAME" | cut -d'-' -f2-)
           echo "::set-output name=second-part::$SECOND_PART"
         
-      - name: Update Jira Custom Field
+      - name: Update Jira Custom Field - isPRApproved
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_BASIC_API_TOKEN }}
