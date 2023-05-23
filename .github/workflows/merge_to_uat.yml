@@ -2,7 +2,7 @@ name: Merge PR
 
 on:
   repository_dispatch:
-    types: [test_jira_automation]
+    types: [merge_to_uat]
 
 env:
   prNo: ${{ github.event.client_payload.prNo }}
