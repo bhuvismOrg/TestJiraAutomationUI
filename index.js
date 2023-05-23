@@ -5,6 +5,7 @@ var app = express();
 var port = 600
 var xyz = 6000
 var abc = 60000
+var def = 600000
 
 
 fs.appendFile("./uploads/b.txt", "bande", (err,data) => {
