@@ -1,4 +1,4 @@
-name: Merge PR
+name: Merge PR to UAT
 
 on:
   repository_dispatch:
