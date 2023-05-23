@@ -1,0 +1,43 @@
+name: Update Jira Custom Field
+
+on:
+  pull_request_review:
+    types:
+      - submitted
+jobs:
+  update-jira:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Retrieve Issue Key from Branch Name
+        id: split-branch-name
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          BRANCH_NAME=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
+            | jq -r '.head.ref')
+          SECOND_PART=$(echo "$BRANCH_NAME" | cut -d'-' -f2-)
+          echo "::set-output name=second-part::$SECOND_PART"
+        
+      - name: Update Jira Custom Field - isPRApproved
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_BASIC_API_TOKEN }}
+        if: github.event.review.state == 'approved'
+        run: |
+          ISSUE_KEY="${{ steps.split-branch-name.outputs.second-part }}"  # Replace with the Jira issue key
+          API_ENDPOINT="/rest/api/2/issue/$ISSUE_KEY"  # Replace with the desired Jira API endpoint
+
+          REQUEST_BODY='{
+            "fields": {
+              "customfield_10038": "True"
+            }
+          }'
+
+          curl --location --request PUT $JIRA_BASE_URL$API_ENDPOINT \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Basic $JIRA_API_TOKEN" \
+            -d "$REQUEST_BODY"
