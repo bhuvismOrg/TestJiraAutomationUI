@@ -1,4 +1,4 @@
-name: Update Jira Custom Field
+name: Update Jira Custom Field - isPRApproved
 
 on:
   pull_request_review:
