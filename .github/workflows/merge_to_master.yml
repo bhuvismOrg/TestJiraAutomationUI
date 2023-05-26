@@ -8,6 +8,8 @@ env:
   prNo: ${{ github.event.client_payload.prNo }}
   repo: ${{ github.event.client_payload.repo }}
   owner: ${{ github.event.client_payload.owner }}
+  branch_name: ${{ github.event.client_payload.branch_name }}
+  branch_commit_sha: ${{ github.event.client_payload.branch_commit_sha }}
 
 jobs:
   merge:
@@ -37,3 +39,7 @@ jobs:
               repo: repo,
               pull_number: prNo
             });
+            
+      - name: Freeze branch
+        run: |
+          git update-ref refs/heads/process.env.branch_name process.env.branch_commit_sha
