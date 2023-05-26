@@ -40,3 +40,17 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Authorization: Basic $JIRA_API_TOKEN" \
             -d "$REQUEST_BODY"
+            
+      - name: Login to Jira
+        uses: atlassian/gajira-login@v3
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+            
+      - name: Transition issue
+        uses: atlassian/gajira-transition@v3
+        with:
+          issue: ${{ env.issue_key }}
+          transition: "PR Approved"
+        if: ${{ github.event.review.state == "approved" }}
