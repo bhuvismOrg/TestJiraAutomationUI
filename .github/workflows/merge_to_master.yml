@@ -39,7 +39,3 @@ jobs:
               repo: repo,
               pull_number: prNo
             });
-            
-      - name: Freeze branch
-        run: |
-          git update-ref refs/heads/${{env.branch_name}} ${{env.branch_commit_sha}}
