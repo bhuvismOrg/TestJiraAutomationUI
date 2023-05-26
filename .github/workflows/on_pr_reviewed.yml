@@ -53,4 +53,4 @@ jobs:
         with:
           issue: ${{ env.issue_key }}
           transition: "PR Approved"
-        if: ${{ github.event.review.state == "approved" }}
+        if: ${{ github.event.review.state == 'APPROVED' }}
