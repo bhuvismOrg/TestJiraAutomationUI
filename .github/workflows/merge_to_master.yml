@@ -27,7 +27,7 @@ jobs:
             const prNo = process.env.prNo;
             const owner = process.env.owner;
             const repo = process.env.repo;
-            console.log(prNo, owner, repo);
+            console.log(prNo, owner, repo, process.env.branch_commit_sha, process.env.branch_name);
             const { data: pullRequest } = await github.pulls.get({
               owner: owner,
               repo: repo,
