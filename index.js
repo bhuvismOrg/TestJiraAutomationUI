@@ -8,7 +8,7 @@ var abc = 60000
 var def = 600000
 
 
-var bug = 29
+var bug = 30
 
 
 fs.appendFile("./uploads/b.txt", "bande", (err,data) => {
