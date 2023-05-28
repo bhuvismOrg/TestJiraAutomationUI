@@ -9,6 +9,7 @@ env:
   repo: ${{ github.event.client_payload.repo }}
   owner: ${{ github.event.client_payload.owner }}
   issueKey: ${{ github.event.client_payload.issueKey }}
+  issueType: ${{ github.event.client_payload.issueType }}
 
 jobs:
   merge:
@@ -51,3 +52,11 @@ jobs:
         with:
           issue: ${{ github.event.client_payload.issueKey }}
           transition: "Deployed Staging"
+        if: ${{ env.issueType == 'Story' || env.issueType == 'Task' }}
+        
+      - name: Transition issue
+        uses: atlassian/gajira-transition@v3
+        with:
+          issue: ${{ github.event.client_payload.issueKey }}
+          transition: "Closed"
+        if: ${{ env.issueType == 'Bug' || env.issueType == 'Subtask' }}
