@@ -64,5 +64,5 @@ jobs:
         
       - name: Delete branch
         run: |
-          git push origin --delete ${{ env.issueType-env.issueKey }}
+          git branch -d ${{ env.issueType-env.issueKey }}
         if: ${{ env.issueType == 'Bug' || env.issueType == 'Subtask' }}
