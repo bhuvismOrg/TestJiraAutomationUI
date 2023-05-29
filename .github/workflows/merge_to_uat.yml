@@ -10,6 +10,7 @@ env:
   owner: ${{ github.event.client_payload.owner }}
   issueKey: ${{ github.event.client_payload.issueKey }}
   issueType: ${{ github.event.client_payload.issueType }}
+  ticketStatus: ${{ github.event.client_payload.ticketStatus }}
 
 jobs:
   merge:
@@ -52,14 +53,14 @@ jobs:
         with:
           issue: ${{ github.event.client_payload.issueKey }}
           transition: "Deployed Staging"
-        if: ${{ env.issueType == 'Story' || env.issueType == 'Task' }}
+        if: ${{ env.issueType == 'Story' || env.issueType == 'Task' || env.ticketStatus == 'SoleBug' }}
         
       - name: Transition issue
         uses: atlassian/gajira-transition@v3
         with:
           issue: ${{ github.event.client_payload.issueKey }}
           transition: "Closed"
-        if: ${{ env.issueType == 'Bug' || env.issueType == 'Subtask' }}
+        if: ${{ env.issueType == 'Bug' || env.issueType == 'Subtask' && env.ticketStatus != 'SoleBug' }}
         
       - name: Delete branch
         run: |
