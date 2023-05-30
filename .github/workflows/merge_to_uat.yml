@@ -52,7 +52,7 @@ jobs:
         uses: atlassian/gajira-transition@v3
         with:
           issue: ${{ github.event.client_payload.issueKey }}
-          transition: "Deployed Staging"
+          transition: "Freeze Branch"
         if: ${{ env.issueType == 'Story' || env.issueType == 'Task' || env.ticketStatus == 'SoleBug' }}
         
       - name: Transition issue
