@@ -1,4 +1,4 @@
-name: Merge PR to UAT
+name: Merge PR to Base
 
 on:
   repository_dispatch:
@@ -64,5 +64,5 @@ jobs:
         
       - name: Delete branch
         run: |
-          git branch -d ${{env.issueType}}-${{env.issueKey}}
-        if: ${{ env.issueType == 'Bug' || env.issueType == 'Subtask' }}
+          git branch -d origin ${{env.issueType}}-${{env.issueKey}}
+        if: ${{ env.issueType == 'Bug' && env.ticketStatus != 'SoleBug' || env.issueType == 'Subtask' }}
