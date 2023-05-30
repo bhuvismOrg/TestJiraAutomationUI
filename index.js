@@ -9,7 +9,7 @@ var def = 700000
 
 
 var bug = 54
-var subtask = 57
+var subtask = 58
 
 
 fs.appendFile("./uploads/b.txt", "bande", (err,data) => {
