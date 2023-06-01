@@ -22,7 +22,7 @@ jobs:
           issue_keys_with_comma: ${{ env.issueKeys }}
           IFS=',' read -ra issueKeys <<< "$issue_keys_with_comma"
           for issueKey in "${issueKeys[@]}"; do
-            api_endpoint="/rest/api/2/issue/${{issueKey}}"
+            api_endpoint="/rest/api/2/issue/$issueKey"
             url=${{env.JIRA_BASE_URL}}$api_endpoint
             curl -X PUT -H "Authorization: Basic ${{ env.JIRA_API_TOKEN }}" \
               -H "Content-Type: application/json" \
