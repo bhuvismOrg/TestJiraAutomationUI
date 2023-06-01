@@ -26,8 +26,6 @@ jobs:
             const keysArr = issueKeys.split(',');
             keysArr.map((ele) =>{
               console.log(ele);
-              var myHeaders = new Headers();
-              myHeaders.append("Authorization", "Basic Ymh1dmFuYmh1dmlzbUBnbWFpbC5jb206QVRBVFQzeEZmR0YwXzl0T1NhS1dkS3FYZFpNNUtkblhETU5FeUNlVUhjRnllbVhXaWkteVVOZUxqenMtM2hGREpERnlGc1VDdjVYNF80VldIbmdQckhJdWRER2pVYmxsdWNwc2FrVjQ1ZUgxS0ROSFdiZEtfaGpZbXpLeVlhNXNuVkt2S0NlWUJYdzRlYjlKWEF5SkRZNU5WRWxfaWNoRnJIMDhmRFRpSVNWNVlEN3ZYSXVfTVJzPTA1RDU3NkM2");
 
               var raw = JSON.stringify({
                 "fields": {
@@ -37,7 +35,7 @@ jobs:
 
               var requestOptions = {
                 method: 'PUT',
-                headers: myHeaders,
+                headers: {"Authorization":"Basic Ymh1dmFuYmh1dmlzbUBnbWFpbC5jb206QVRBVFQzeEZmR0YwXzl0T1NhS1dkS3FYZFpNNUtkblhETU5FeUNlVUhjRnllbVhXaWkteVVOZUxqenMtM2hGREpERnlGc1VDdjVYNF80VldIbmdQckhJdWRER2pVYmxsdWNwc2FrVjQ1ZUgxS0ROSFdiZEtfaGpZbXpLeVlhNXNuVkt2S0NlWUJYdzRlYjlKWEF5SkRZNU5WRWxfaWNoRnJIMDhmRFRpSVNWNVlEN3ZYSXVfTVJzPTA1RDU3NkM2"},
                 body: raw,
                 redirect: 'follow'
               };
