@@ -24,6 +24,8 @@ jobs:
           script: |
             const issueKeys = process.env.issueKeys;
             const keysArr = issueKeys.split(',');
-            keysArr.map((ele) => console.log(ele));
+            keysArr.map((ele) =>{
+              console.log(ele);
+              });
             console.log(issueKeys);
             
