@@ -26,6 +26,6 @@ jobs:
             url=${{env.JIRA_BASE_URL}}$api_endpoint
             curl -X PUT -H "Authorization: Basic ${{ env.JIRA_API_TOKEN }}" \
               -H "Content-Type: application/json" \
-              -d '{"fields":{"customfield_10038":"True"}}' \
+              -d '{"fields":{"customfield_10038":"SubTask_WithParentBranch"}}' \
               "$url"
           done
