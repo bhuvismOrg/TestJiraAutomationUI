@@ -19,9 +19,9 @@ jobs:
 
       - name: Change linkedIssues fields in Jira
         run: |
-          issue_keys_with_comma: ${{ env.issueKeys }},
-          IFS=',' read -ra issueKeys <<< "$issue_keys_with_comma"
-          for issueKey in "${issueKeys[@]}"; do
+          issue_keys_with_comma="JGI-1,JGI-2,JGI-3"
+          IFS=',' read -ra issue_keys <<< "$issue_keys_with_comma"
+          for issueKey in "${issue_keys[@]}"; do
             api_endpoint="/rest/api/2/issue/$issueKey"
             url=${{env.JIRA_BASE_URL}}$api_endpoint
             curl -X PUT -H "Authorization: Basic ${{ env.JIRA_API_TOKEN }}" \
