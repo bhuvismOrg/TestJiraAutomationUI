@@ -18,23 +18,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Change linkedIssues fields in Jira
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const issueKeys = process.env.issueKeys;
-            const keysArr = issueKeys.split(',');
-            keysArr.map((ele) =>{
-              console.log(ele);
-              curl --location --request PUT 'https://bhuvsimown.atlassian.net/rest/api/2/issue/JGI-71' \
-                    --header 'Content-Type: application/json' \
-                    --header 'Authorization: Basic Ymh1dmFuYmh1dmlzbUBnbWFpbC5jb206QVRBVFQzeEZmR0YwXzl0T1NhS1dkS3FYZFpNNUtkblhETU5FeUNlVUhjRnllbVhXaWkteVVOZUxqenMtM2hGREpERnlGc1VDdjVYNF80VldIbmdQckhJdWRER2pVYmxsdWNwc2FrVjQ1ZUgxS0ROSFdiZEtfaGpZbXpLeVlhNXNuVkt2S0NlWUJYdzRlYjlKWEF5SkRZNU5WRWxfaWNoRnJIMDhmRFRpSVNWNVlEN3ZYSXVfTVJzPTA1RDU3NkM2' \
-                    --header 'Cookie: atlassian.xsrf.token=27301f94-52ef-472c-92bd-8fc0e3b64628_1d74c5f029ad70ad516de0138ba3c8d7640a498b_lin' \
-                    --data '{
-                        "fields": {
-                            "customfield_10038": "True"
-                        }
-                    }'
-              });
-            console.log(issueKeys);
-            
+        run: |
+          issue_keys_with_comma: ${{ env.issueKeys }}
+          IFS=',' read -ra issueKeys <<< "$issue_keys_with_comma"
+          for issueKey in "${issueKeys[@]}"; do
+            api_endpoint="/rest/api/2/issue/${{issueKey}}"
+            url=${{env.JIRA_BASE_URL}}$api_endpoint
+            curl -X PUT -H "Authorization: Basic ${{ env.JIRA_API_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d '{"fields":{"customfield_10038":"True"}}' \
+              "$url"
