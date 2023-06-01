@@ -27,9 +27,7 @@ jobs:
             keysArr.map((ele) =>{
               console.log(ele);
               var myHeaders = new Headers();
-              myHeaders.append("Content-Type", "application/json");
               myHeaders.append("Authorization", "Basic Ymh1dmFuYmh1dmlzbUBnbWFpbC5jb206QVRBVFQzeEZmR0YwXzl0T1NhS1dkS3FYZFpNNUtkblhETU5FeUNlVUhjRnllbVhXaWkteVVOZUxqenMtM2hGREpERnlGc1VDdjVYNF80VldIbmdQckhJdWRER2pVYmxsdWNwc2FrVjQ1ZUgxS0ROSFdiZEtfaGpZbXpLeVlhNXNuVkt2S0NlWUJYdzRlYjlKWEF5SkRZNU5WRWxfaWNoRnJIMDhmRFRpSVNWNVlEN3ZYSXVfTVJzPTA1RDU3NkM2");
-              myHeaders.append("Cookie", "atlassian.xsrf.token=27301f94-52ef-472c-92bd-8fc0e3b64628_1d74c5f029ad70ad516de0138ba3c8d7640a498b_lin");
 
               var raw = JSON.stringify({
                 "fields": {
@@ -44,9 +42,11 @@ jobs:
                 redirect: 'follow'
               };
               
-              var url = process.env.JIRA_BASE_URL+ele;
+              const API_ENDPOINT="/rest/api/2/issue/"+ele;
+              
+              var url = process.env.JIRA_BASE_URL+API_ENDPOINT;
 
-              fetch(process., requestOptions)
+              fetch(url, requestOptions)
                 .then(response => response.text())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
