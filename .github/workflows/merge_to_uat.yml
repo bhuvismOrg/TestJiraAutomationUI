@@ -2,7 +2,7 @@ name: Merge PR to Base
 
 on:
   repository_dispatch:
-    types: [merge_to_uat]
+    types: [merge_to_base]
 
 env:
   prNo: ${{ github.event.client_payload.prNo }}
