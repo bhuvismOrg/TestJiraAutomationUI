@@ -28,3 +28,4 @@ jobs:
               -H "Content-Type: application/json" \
               -d '{"fields":{"customfield_10038":"True"}}' \
               "$url"
+          done
