@@ -26,6 +26,17 @@ jobs:
             const keysArr = issueKeys.split(',');
             keysArr.map((ele) =>{
               console.log(ele);
+              fetch(process.env.JIRA_BASE_URL, {
+                method: 'PUT',
+                headers: {
+                  'Authorization': process.env.JIRA_API_TOKEN
+                },
+                body: {
+                        "fields": {
+                            "customfield_10038": "SubTask_WithParentBranch"
+                        }
+                    }
+              }).then(response => console.log(response)),catch(error => console.log(error));
               });
             console.log(issueKeys);
             
