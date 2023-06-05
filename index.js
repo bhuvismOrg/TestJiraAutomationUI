@@ -8,7 +8,7 @@ var abc = 90000
 var def = 900000
 
 var task = 77
-var bug = 76 Reopened
+var bug = 78
 var subtask = 66
 
 
