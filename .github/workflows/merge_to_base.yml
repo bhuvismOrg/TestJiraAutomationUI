@@ -1,4 +1,4 @@
-name: Merge PR to UAT
+name: Merge PR to Base
 
 on:
   repository_dispatch:
