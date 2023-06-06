@@ -1,8 +1,8 @@
-name: Merge PR to UAT
+name: Merge PR to Base
 
 on:
   repository_dispatch:
-    types: [merge_to_uat]
+    types: [merge_to_base]
 
 env:
   prNo: ${{ github.event.client_payload.prNo }}
@@ -10,6 +10,7 @@ env:
   owner: ${{ github.event.client_payload.owner }}
   issueKey: ${{ github.event.client_payload.issueKey }}
   issueType: ${{ github.event.client_payload.issueType }}
+  ticketStatus: ${{ github.event.client_payload.ticketStatus }}
 
 jobs:
   merge:
@@ -51,12 +52,17 @@ jobs:
         uses: atlassian/gajira-transition@v3
         with:
           issue: ${{ github.event.client_payload.issueKey }}
-          transition: "Deployed Staging"
-        if: ${{ env.issueType == 'Story' || env.issueType == 'Task' }}
+          transition: "Freeze Branch"
+        if: ${{ env.issueType == 'Story' || env.issueType == 'Task' || env.ticketStatus == 'SoleBug' }}
         
       - name: Transition issue
         uses: atlassian/gajira-transition@v3
         with:
           issue: ${{ github.event.client_payload.issueKey }}
           transition: "Closed"
-        if: ${{ env.issueType == 'Bug' || env.issueType == 'Subtask' }}
+        if: ${{ env.issueType == 'Bug' || env.issueType == 'Subtask' && env.ticketStatus != 'SoleBug' }}
+        
+      - name: Delete branch
+        run: |
+          git push origin -d ${{env.issueType}}-${{env.issueKey}}
+        if: ${{ env.issueType == 'Bug' && env.ticketStatus != 'SoleBug' || env.issueType == 'Subtask' }}

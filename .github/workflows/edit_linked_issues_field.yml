@@ -1,0 +1,31 @@
+name: Merge PR to Base
+
+on:
+  repository_dispatch:
+    types: [edit_linked_issues_field]
+
+env:
+  issueKeys: ${{ github.event.client_payload.issueKeys }}
+  JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+  JIRA_API_TOKEN: ${{ secrets.JIRA_BASIC_API_TOKEN }}
+
+jobs:
+  edit-fields:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Change linkedIssues fields in Jira
+        run: |
+          issue_keys_with_comma=${{env.issueKeys}}
+          IFS=',' read -ra issue_keys <<< "$issue_keys_with_comma"
+          for issueKey in "${issue_keys[@]}"; do
+            api_endpoint="/rest/api/2/issue/$issueKey"
+            url=${{env.JIRA_BASE_URL}}$api_endpoint
+            curl -X PUT -H "Authorization: Basic ${{ env.JIRA_API_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d '{"fields":{"customfield_10038":"SubTask_WithParentBranch"}}' \
+              "$url"
+          done

@@ -40,6 +40,7 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Authorization: Basic $JIRA_API_TOKEN" \
             -d "$REQUEST_BODY"
+        if: ${{ github.event.review.state == 'APPROVED' }}
             
       - name: Login to Jira
         uses: atlassian/gajira-login@v3
